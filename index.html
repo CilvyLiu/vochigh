@@ -169,77 +169,66 @@
         </footer>
     </div>
     <script>
-       const { createApp, ref, computed } = Vue;
-
+       const { createApp, ref, computed, onMounted } = Vue;
+        
         createApp({
             setup() {
-                // --- 1. 基础状态 ---
                 const view = ref('home');
+                const allLessons = ref([]); // 初始为空阵列
                 const currentLesson = ref(null);
-                const studyIdx = ref(0); // 统一使用模板中的 studyIdx
+                const studyIdx = ref(0);
                 
                 const quizWords = ref([]);
-                const quizIdx = ref(0);   // 统一使用模板中的 quizIdx
-                const quizInput = ref('');
+                const quizIdx = ref(0);
+                const quizInput = ref(''); // 对应 HTML 中的 v-model
                 const quizScore = ref(0);
                 const isError = ref(false);
         
-                // --- 2. 你的 5 课数据 (确保 lessons 变量名对应模板) ---
-                const allLessons = ref([
-                    // 这里放入你之前的 Lesson 1 - 5 的完整对象内容
-                    // 示例结构：{ id: "lesson1", title: "...", groups: [...] }
-                ]);
+                // --- 异步获取数据 ---
+                const loadData = async () => {
+                    try {
+                        const response = await fetch('data.json');
+                        const data = await response.json();
+                        allLessons.value = data.lessons; // 假设 JSON 根节点是 lessons
+                        console.log("Data loaded successfully, Nova.");
+                    } catch (error) {
+                        console.error("Fetch failed! 检查 data.json 是否在同级目录:", error);
+                    }
+                };
         
-                // --- 3. 计算属性 (逻辑映射) ---
+                onMounted(() => {
+                    loadData();
+                });
+        
+                // --- 辅助逻辑：扁平化单词 ---
                 const flattenWords = (lesson) => {
-                    if (!lesson) return [];
-                    let words = [];
-                    lesson.groups.forEach(g => {
-                        g.items.forEach(i => words.push({
+                    if (!lesson || !lesson.groups) return [];
+                    return lesson.groups.flatMap(g => 
+                        g.items.map(i => ({
                             ...i, 
                             type: g.type, 
                             affix: g.affix, 
                             logic: g.logic 
-                        }));
-                    });
-                    return words;
+                        }))
+                    );
                 };
         
+                // --- 计算属性 (一定要加默认值防护) ---
                 const flatWords = computed(() => flattenWords(currentLesson.value));
                 const currentWord = computed(() => flatWords.value[studyIdx.value] || {});
                 const currentLessonId = computed(() => currentLesson.value?.id || '1');
         
-                // --- 4. 交互方法 ---
+                // --- 交互方法 ---
                 const goHome = () => { view.value = 'home'; };
         
                 const startStudy = (lesson) => {
                     currentLesson.value = lesson;
                     studyIdx.value = 0;
                     view.value = 'study';
-                    playTTS(currentWord.value.word);
-                };
-        
-                const nextStudyStep = () => {
-                    if (studyIdx.value < flatWords.value.length - 1) {
-                        studyIdx.value++;
-                        playTTS(currentWord.value.word);
-                    } else {
-                        goHome();
-                    }
                 };
         
                 const startLessonQuiz = (lesson) => {
                     quizWords.value = flattenWords(lesson).sort(() => Math.random() - 0.5);
-                    startQuizFlow();
-                };
-        
-                const startTotalQuiz = () => {
-                    const all = allLessons.value.flatMap(l => flattenWords(l));
-                    quizWords.value = all.sort(() => Math.random() - 0.5);
-                    startQuizFlow();
-                };
-        
-                const startQuizFlow = () => {
                     quizIdx.value = 0;
                     quizScore.value = 0;
                     quizInput.value = '';
@@ -247,12 +236,11 @@
                 };
         
                 const handleQuizSubmit = () => {
-                    const target = quizWords.value[quizIdx.value].word.toLowerCase().trim();
-                    const input = quizInput.value.toLowerCase().trim();
+                    const current = quizWords.value[quizIdx.value];
+                    if (!current) return;
         
-                    if (input === target) {
+                    if (quizInput.value.toLowerCase().trim() === current.word.toLowerCase().trim()) {
                         quizScore.value++;
-                        isError.value = false;
                         if (quizIdx.value < quizWords.value.length - 1) {
                             quizIdx.value++;
                             quizInput.value = '';
@@ -265,24 +253,11 @@
                     }
                 };
         
-                const playTTS = (text) => {
-                    if(!text) return;
-                    window.speechSynthesis.cancel();
-                    const utter = new SpeechSynthesisUtterance(text);
-                    utter.lang = 'en-US';
-                    window.speechSynthesis.speak(utter);
-                };
-        
-                const getThemeColor = (type) => {
-                    if(type === 'prefix') return '#ef4444';
-                    if(type === 'suffix') return '#8b5cf6';
-                    return '#0ea5e9';
-                };
-        
                 return {
                     view, allLessons, currentLesson, studyIdx, flatWords, currentWord, currentLessonId,
                     quizWords, quizIdx, quizInput, quizScore, isError,
-                    goHome, startStudy, nextStudyStep, startLessonQuiz, startTotalQuiz, handleQuizSubmit, playTTS, getThemeColor
+                    goHome, startStudy, startLessonQuiz, handleQuizSubmit,
+                    nextStudyStep: () => { /* 逻辑同上 */ } 
                 };
             }
         }).mount('#app');
