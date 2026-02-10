@@ -146,106 +146,152 @@
         </footer>
     </div>
 
-    <script>
-        const { createApp, ref, computed, onMounted } = Vue;
+   <script>
+    const { createApp, ref, computed, onMounted } = Vue;
 
-        createApp({
-            setup() {
-                const view = ref('home');
-                const allLessons = ref([]);
-                const currentLessonId = ref('lesson1');
-                const studyIdx = ref(0);
-                const activeLesson = ref(null);
+    createApp({
+        setup() {
+            const view = ref('home');
+            const allLessons = ref([]); // 确保初始状态是空数组
+            const currentLessonId = ref('lesson1');
+            const studyIdx = ref(0);
+            const activeLesson = ref(null);
+            
+            const quizList = ref([]);
+            const quizIdx = ref(0);
+            const quizInput = ref('');
+            const quizScore = ref(0);
+            const isError = ref(false);
+
+            // 1. 健壮的数据加载逻辑
+            onMounted(async () => {
+                try {
+                    const res = await fetch('data.json');
+                    const data = await res.json();
+                    
+                    // 自动适配格式：如果 data 是数组直接用，如果是单对象则包装成数组
+                    if (Array.isArray(data)) {
+                        allLessons.value = data;
+                    } else if (data && typeof data === 'object') {
+                        // 如果 JSON 结构是 { "lessons": [...] }
+                        if (data.lessons && Array.isArray(data.lessons)) {
+                            allLessons.value = data.lessons;
+                        } else {
+                            // 如果只是单课对象
+                            allLessons.value = [data];
+                        }
+                    }
+                } catch (e) {
+                    console.error("数据加载失败。提示：请确保在本地服务器（如 Live Server）下运行，且 data.json 格式正确。");
+                }
+            });
+
+            // 2. 扁平化单词列表（增加安全检查）
+            const flatWords = computed(() => {
+                if (!activeLesson.value || !activeLesson.value.groups) return [];
+                return activeLesson.value.groups.flatMap(g => 
+                    (g.items || []).map(i => ({ 
+                        ...i, 
+                        affix: g.affix || '', 
+                        logic: g.logic || '' 
+                    }))
+                );
+            });
+
+            // 3. 安全获取当前单词（防止读取 undefined.logic）
+            const currentWord = computed(() => {
+                const words = flatWords.value;
+                if (words.length > 0 && words[studyIdx.value]) {
+                    return words[studyIdx.value];
+                }
+                // 兜底空对象
+                return { word: '', phonetic: '', meaning: '', logic: '', pos: '', affix: '' };
+            });
+
+            // 4. 功能函数
+            const startStudy = (lesson) => {
+                activeLesson.value = lesson;
+                currentLessonId.value = lesson.id || 'lesson1';
+                studyIdx.value = 0;
+                view.value = 'study';
+                // 延迟播放，确保在计算属性更新后
+                setTimeout(() => {
+                    if (flatWords.value.length > 0) playTTS(flatWords.value[0].word);
+                }, 100);
+            };
+
+            const nextStudyStep = () => {
+                if (studyIdx.value < flatWords.value.length - 1) {
+                    studyIdx.value++;
+                    playTTS(currentWord.value.word);
+                } else {
+                    startQuiz(flatWords.value);
+                }
+            };
+
+            const startQuiz = (words) => {
+                quizList.value = [...words].sort(() => Math.random() - 0.5);
+                quizIdx.value = 0;
+                quizScore.value = 0;
+                quizInput.value = '';
+                view.value = 'quiz';
+            };
+
+            const startTotalQuiz = () => {
+                currentLessonId.value = 'lesson5';
+                // 增加数组检测
+                if (!Array.isArray(allLessons.value)) return;
+
+                const total = allLessons.value.flatMap(l => {
+                    if (!l.groups) return [];
+                    return l.groups.flatMap(g => 
+                        (g.items || []).map(i => ({ ...i, affix: g.affix, logic: g.logic }))
+                    );
+                });
+                if (total.length > 0) startQuiz(total);
+            };
+
+            const handleQuizSubmit = () => {
+                if (quizList.value.length === 0) return;
                 
-                const quizList = ref([]);
-                const quizIdx = ref(0);
-                const quizInput = ref('');
-                const quizScore = ref(0);
-                const isError = ref(false);
-
-                // 加载数据
-                onMounted(async () => {
-                    try {
-                        const res = await fetch('data.json');
-                        allLessons.value = await res.json();
-                    } catch (e) {
-                        console.error("Please run with a local server to load data.json");
+                const correct = quizList.value[quizIdx.value].word.toLowerCase().trim();
+                if (quizInput.value.toLowerCase().trim() === correct) {
+                    quizScore.value++;
+                    playTTS(correct);
+                    if (quizIdx.value < quizList.value.length - 1) {
+                        quizIdx.value++;
+                        quizInput.value = '';
+                    } else { 
+                        view.value = 'result'; 
                     }
-                });
+                } else {
+                    isError.value = true;
+                    setTimeout(() => isError.value = false, 500);
+                }
+            };
 
-                const flatWords = computed(() => {
-                    if (!activeLesson.value) return [];
-                    return activeLesson.value.groups.flatMap(g => 
-                        g.items.map(i => ({ ...i, affix: g.affix, logic: g.logic }))
-                    );
-                });
+            const playTTS = (text) => {
+                if (!text) return;
+                const utter = new SpeechSynthesisUtterance(text);
+                utter.lang = 'en-GB';
+                utter.rate = 0.8;
+                window.speechSynthesis.cancel(); // 先停止之前的播放
+                window.speechSynthesis.speak(utter);
+            };
 
-                const startStudy = (lesson) => {
-                    activeLesson.value = lesson;
-                    currentLessonId.value = lesson.id;
-                    studyIdx.value = 0;
-                    view.value = 'study';
-                    playTTS(flatWords.value[0].word);
-                };
+            const goHome = () => { 
+                view.value = 'home'; 
+                currentLessonId.value = 'lesson1'; 
+            };
 
-                const nextStudyStep = () => {
-                    if (studyIdx.value < flatWords.value.length - 1) {
-                        studyIdx.value++;
-                        playTTS(flatWords.value[studyIdx.value].word);
-                    } else {
-                        startQuiz(flatWords.value);
-                    }
-                };
-
-                const startQuiz = (words) => {
-                    quizList.value = [...words].sort(() => Math.random() - 0.5);
-                    quizIdx.value = 0;
-                    quizScore.value = 0;
-                    quizInput.value = '';
-                    view.value = 'quiz';
-                };
-
-                const startTotalQuiz = () => {
-                    currentLessonId.value = 'lesson5'; // 默认大考样式
-                    const total = allLessons.value.flatMap(l => 
-                        l.groups.flatMap(g => g.items.map(i => ({ ...i, affix: g.affix, logic: g.logic })))
-                    );
-                    startQuiz(total);
-                };
-
-                const handleQuizSubmit = () => {
-                    const correct = quizList.value[quizIdx.value].word.toLowerCase().trim();
-                    if (quizInput.value.toLowerCase().trim() === correct) {
-                        quizScore.value++;
-                        playTTS(correct);
-                        if (quizIdx.value < quizList.value.length - 1) {
-                            quizIdx.value++;
-                            quizInput.value = '';
-                        } else { view.value = 'result'; }
-                    } else {
-                        isError.value = true;
-                        setTimeout(() => isError.value = false, 500);
-                    }
-                };
-
-                const playTTS = (text) => {
-                    const utter = new SpeechSynthesisUtterance(text);
-                    utter.lang = 'en-GB'; // 核心需求：标准英音
-                    utter.rate = 0.8;
-                    window.speechSynthesis.speak(utter);
-                };
-
-                const goHome = () => { view.value = 'home'; currentLessonId.value = 'lesson1'; };
-
-                return {
-                    view, allLessons, currentLessonId, studyIdx, activeLesson, flatWords,
-                    currentWord: computed(() => flatWords.value[studyIdx.value]),
-                    isLastWord: computed(() => studyIdx.value === flatWords.value.length - 1),
-                    quizList, quizIdx, quizInput, quizScore, isError,
-                    startStudy, nextStudyStep, startTotalQuiz, handleQuizSubmit, playTTS, goHome
-                };
-            }
-        }).mount('#app');
-    </script>
+            return {
+                view, allLessons, currentLessonId, studyIdx, activeLesson, flatWords, currentWord,
+                isLastWord: computed(() => studyIdx.value === flatWords.value.length - 1),
+                quizList, quizIdx, quizInput, quizScore, isError,
+                startStudy, nextStudyStep, startTotalQuiz, handleQuizSubmit, playTTS, goHome
+            };
+        }
+    }).mount('#app');
+</script>
 </body>
 </html>
