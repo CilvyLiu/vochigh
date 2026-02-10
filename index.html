@@ -169,114 +169,91 @@
         </footer>
     </div>
     <script>
-        const { createApp, ref, computed } = Vue;
-    
+       const { createApp, ref, computed } = Vue;
+
         createApp({
             setup() {
-                // --- 状态定义 ---
+                // --- 1. 基础状态 ---
                 const view = ref('home');
-                const studyIdx = ref(0);
-                const currentLessonId = ref('lesson1'); // 用于控制主题色
                 const currentLesson = ref(null);
+                const studyIdx = ref(0); // 统一使用模板中的 studyIdx
                 
-                const quizList = ref([]);
-                const quizIdx = ref(0);
+                const quizWords = ref([]);
+                const quizIdx = ref(0);   // 统一使用模板中的 quizIdx
                 const quizInput = ref('');
                 const quizScore = ref(0);
                 const isError = ref(false);
-    
-                // --- 模拟数据源 (确保包含 type 和 affix) ---
+        
+                // --- 2. 你的 5 课数据 (确保 lessons 变量名对应模板) ---
                 const allLessons = ref([
-                    {
-                        id: 'lesson1',
-                        title: '后缀篇 · 使动与定义',
-                        groups: [{
-                            logic: "使成为；加强含义",
-                            type: 'suffix', // 对应 CSS color-suffix
-                            affix: 'de-',
-                            items: [
-                                {word:"depict", phonetic:"dɪˈpɪkt", pos:"vt.", meaning:"描述；描画"},
-                                {word:"define", phonetic:"dɪˈfaɪn", pos:"vt.", meaning:"定义；使明确"},
-                            ]
-                        }]
-                    },
-                    {
-                        id: 'lesson2',
-                        title: '前缀篇 · 否定逻辑',
-                        groups: [{
-                            logic: "表示否定或相反状态",
-                            type: 'prefix', // 对应 CSS color-prefix
-                            affix: 'un-',
-                            items: [
-                                {word:"unusual", phonetic:"ʌnˈjuːʒuəl", pos:"adj.", meaning:"异常的"},
-                                {word:"unable", phonetic:"ʌnˈeɪbl", pos:"adj.", meaning:"不能的"}
-                            ]
-                        }]
-                    }
+                    // 这里放入你之前的 Lesson 1 - 5 的完整对象内容
+                    // 示例结构：{ id: "lesson1", title: "...", groups: [...] }
                 ]);
-    
-                // --- 逻辑计算 ---
+        
+                // --- 3. 计算属性 (逻辑映射) ---
                 const flattenWords = (lesson) => {
                     if (!lesson) return [];
                     let words = [];
                     lesson.groups.forEach(g => {
                         g.items.forEach(i => words.push({
                             ...i, 
-                            logic: g.logic, 
-                            type: g.type || 'root',
-                            affix: g.affix || ''
+                            type: g.type, 
+                            affix: g.affix, 
+                            logic: g.logic 
                         }));
                     });
                     return words;
                 };
-    
+        
                 const flatWords = computed(() => flattenWords(currentLesson.value));
                 const currentWord = computed(() => flatWords.value[studyIdx.value] || {});
-    
-                // --- 导航方法 ---
+                const currentLessonId = computed(() => currentLesson.value?.id || '1');
+        
+                // --- 4. 交互方法 ---
                 const goHome = () => { view.value = 'home'; };
-    
+        
                 const startStudy = (lesson) => {
                     currentLesson.value = lesson;
-                    currentLessonId.value = lesson.id;
                     studyIdx.value = 0;
                     view.value = 'study';
+                    playTTS(currentWord.value.word);
                 };
-    
+        
                 const nextStudyStep = () => {
                     if (studyIdx.value < flatWords.value.length - 1) {
                         studyIdx.value++;
                         playTTS(currentWord.value.word);
                     } else {
-                        view.value = 'home';
+                        goHome();
                     }
                 };
-    
-                // --- 测试逻辑 ---
+        
                 const startLessonQuiz = (lesson) => {
-                    quizList.value = flattenWords(lesson).sort(() => Math.random() - 0.5);
-                    startQuizMode();
+                    quizWords.value = flattenWords(lesson).sort(() => Math.random() - 0.5);
+                    startQuizFlow();
                 };
-    
+        
                 const startTotalQuiz = () => {
                     const all = allLessons.value.flatMap(l => flattenWords(l));
-                    quizList.value = all.sort(() => Math.random() - 0.5);
-                    startQuizMode();
+                    quizWords.value = all.sort(() => Math.random() - 0.5);
+                    startQuizFlow();
                 };
-    
-                const startQuizMode = () => {
+        
+                const startQuizFlow = () => {
                     quizIdx.value = 0;
                     quizScore.value = 0;
                     quizInput.value = '';
                     view.value = 'quiz';
                 };
-    
+        
                 const handleQuizSubmit = () => {
-                    const target = quizList.value[quizIdx.value].word.toLowerCase();
-                    if (quizInput.value.trim().toLowerCase() === target) {
+                    const target = quizWords.value[quizIdx.value].word.toLowerCase().trim();
+                    const input = quizInput.value.toLowerCase().trim();
+        
+                    if (input === target) {
                         quizScore.value++;
                         isError.value = false;
-                        if (quizIdx.value < quizList.value.length - 1) {
+                        if (quizIdx.value < quizWords.value.length - 1) {
                             quizIdx.value++;
                             quizInput.value = '';
                         } else {
@@ -287,25 +264,25 @@
                         setTimeout(() => isError.value = false, 500);
                     }
                 };
-    
+        
                 const playTTS = (text) => {
                     if(!text) return;
                     window.speechSynthesis.cancel();
                     const utter = new SpeechSynthesisUtterance(text);
-                    utter.lang = 'en-GB';
+                    utter.lang = 'en-US';
                     window.speechSynthesis.speak(utter);
                 };
-    
+        
                 const getThemeColor = (type) => {
-                    const colors = { prefix: '#ef4444', suffix: '#8b5cf6', root: '#0ea5e9' };
-                    return colors[type] || '#000';
+                    if(type === 'prefix') return '#ef4444';
+                    if(type === 'suffix') return '#8b5cf6';
+                    return '#0ea5e9';
                 };
-    
+        
                 return {
-                    view, allLessons, currentLessonId, studyIdx, flatWords, currentWord,
-                    quizList, quizIdx, quizInput, quizScore, isError,
-                    goHome, startStudy, nextStudyStep, startLessonQuiz, startTotalQuiz, 
-                    handleQuizSubmit, playTTS, getThemeColor
+                    view, allLessons, currentLesson, studyIdx, flatWords, currentWord, currentLessonId,
+                    quizWords, quizIdx, quizInput, quizScore, isError,
+                    goHome, startStudy, nextStudyStep, startLessonQuiz, startTotalQuiz, handleQuizSubmit, playTTS, getThemeColor
                 };
             }
         }).mount('#app');
