@@ -169,52 +169,57 @@
                 const isError = ref(false);
 
                 // --- 兼容性 TTS (增强稳定版) ---
+                // --- 兼容性 TTS (Nova's 终极云端回退方案) ---
                 const playTTS = (text) => {
-                    if(!text) return;
+                    if (!text) return;
                 
-                    // 1. 彻底清空，给高级语音腾出通道
-                    window.speechSynthesis.cancel();
-                
-                    const run = () => {
-                        const utter = new SpeechSynthesisUtterance(text);
-                        const voices = window.speechSynthesis.getVoices();
-                
-                        // 2. 【核心】按音质档次排序：死磕“Natural”或“Online”高级音源
-                        const premiumVoice = voices.find(v => v.name.includes('Natural') || v.name.includes('Online')) ||
-                                             voices.find(v => v.lang.includes('en-GB') && !v.localService) || // 优先非本地（云端）音源
-                                             voices.find(v => v.lang.includes('en-GB'));
-                
-                        if (premiumVoice) {
-                            utter.voice = premiumVoice;
-                            // 调试用：你可以在控制台看现在抓到的是哪个高级音
-                            console.log("Current Premium Voice:", premiumVoice.name);
-                        }
-                
-                        utter.lang = 'en-GB';
-                        utter.rate = 0.9;
-                        utter.pitch = 1;
-                
-                        // 3. 解决 synthesis-failed 的关键：捕获错误并静默重试一次
-                        utter.onerror = (e) => {
-                            if(e.error === 'synthesis-failed') {
-                                console.warn("高级音源初始化微延迟，正在自动重连...");
-                                // 仅重试一次，不再报错
-                                setTimeout(() => window.speechSynthesis.speak(utter), 100);
-                            }
-                        };
-                
-                        window.speechSynthesis.speak(utter);
+                    // 内部函数：有道云端音频引擎 (真人发音，质感更好)
+                    const playCloudAudio = (t) => {
+                        console.log("正在使用有道云端音频引擎...");
+                        // type=1 是美音，type=2 是英音
+                        const url = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(t)}&type=2`;
+                        const audio = new Audio(url);
+                        audio.play().catch(e => console.error("云端引擎失败:", e));
                     };
                 
-                    // 4. 确保语音库加载完成再运行
-                    if (window.speechSynthesis.getVoices().length === 0) {
-                        window.speechSynthesis.onvoiceschanged = run;
+                    // 1. 彻底取消之前的原生发声，防止干扰
+                    window.speechSynthesis.cancel();
+                
+                    // 2. 判定是否为安卓 (ENTP 风格的精准打击)
+                    const isAndroid = /Android/i.test(navigator.userAgent);
+                
+                    if (isAndroid) {
+                        // 安卓设备系统语音常年拉跨，直接走云端
+                        playCloudAudio(text);
                     } else {
-                        run();
+                        // PC/iOS 优先走原生高级语音，若 500ms 还没动静则自动回退云端
+                        const msg = new SpeechSynthesisUtterance(text);
+                        msg.lang = 'en-GB'; // 锁定 Nova 喜欢的英音
+                        msg.rate = 0.9;
+                
+                        let hasStarted = false;
+                        
+                        // 容错计时器：如果原生引擎卡死，500ms 后强制切云端
+                        const fallbackTimer = setTimeout(() => {
+                            if (!hasStarted) {
+                                console.warn("原生引擎响应过慢，已切换至云端...");
+                                playCloudAudio(text);
+                            }
+                        }, 500);
+                
+                        msg.onstart = () => {
+                            hasStarted = true;
+                            clearTimeout(fallbackTimer);
+                        };
+                
+                        // 处理某些浏览器挂起的情况
+                        window.speechSynthesis.speak(msg);
+                        if (window.speechSynthesis.paused) {
+                            window.speechSynthesis.resume();
+                        }
                     }
                 };
-
-                const loadData = async () => {
+                                const loadData = async () => {
                     try {
                         const response = await fetch('data.json');
                         const data = await response.json();
