@@ -389,62 +389,245 @@
       }
     ]
   },
-    {
-      "id": "lesson4",
-      "title": "Lesson 4 · 词根 spec (看)",
-      "groups": [
-        {
-          "type": "root",
-          "affix": "spec",
-          "logic": "表示“看”",
-          "items": [
-            {"word":"inspect","phonetic":"[ɪn'spekt]","pos":"vt.","meaning":"检查；视察"},
-            {"word":"spectator","phonetic":"[ˈspektətər]","pos":"n.","meaning":"观众；旁观者"}
-          ]
-        }
-      ]
-    },
-    {
-      "id": "lesson5",
-      "title": "Lesson 5 · 综合复习",
-      "groups": [
-        {
-          "type": "prefix",
-          "affix": "per-/re-/sub-/sus-/trans-/un-",
-          "logic": "贯穿、重复、下方、转移、否定",
-          "items": [
-            {"word":"perceive","phonetic":"[pə'siːv]","pos":"vt./vi.","meaning":"察觉，感觉；感到，感知"},
-            {"word":"permit","phonetic":"[pə'mɪt]","pos":"v./n.","meaning":"许可；允许；许可证"},
-            {"word":"permission","phonetic":"[pə'mɪʃən]","pos":"n.","meaning":"允许，许可"},
-            {"word":"perspective","phonetic":"[pə'spektɪv]","pos":"n./adj.","meaning":"观点；远景；透视图；透视的"},
-            {"word":"reflect","phonetic":"[rɪ'flekt]","pos":"vt./vi.","meaning":"反映；反射；映现；深思"},
-            {"word":"reduction","phonetic":"[rɪ'dʌkʃ(ə)n]","pos":"n.","meaning":"减少；下降；缩小"},
-            {"word":"reserve","phonetic":"[rɪ'zɜːv]","pos":"n./vt./vi.","meaning":"储备，储存；自然保护区；储备；保留；预订"},
-            {"word":"remote","phonetic":"[rɪ'məʊt]","pos":"adj./n.","meaning":"遥远的；偏僻的；疏远的；远程"},
-            {"word":"recommend","phonetic":"[rekə’mend]","pos":"vt./vi.","meaning":"推荐，介绍；建议"},
-            {"word":"reveal","phonetic":"[rɪ'viːl]","pos":"vt./n.","meaning":"显示；透露；揭露；泄露；揭露；暴露"},
-            {"word":"reproduce","phonetic":"[riːprə'djuːs]","pos":"vt./vi.","meaning":"复制；再生；复制；繁殖"},
-            {"word":"respectively","phonetic":"[rɪ'spektɪvlɪ]","pos":"adv.","meaning":"分别地；各自地；独自地"},
-            {"word":"submit","phonetic":"[səb'mɪt]","pos":"vt./vi.","meaning":"使服从；主张；呈递；提交；服从"},
-            {"word":"submissive","phonetic":"[səb'mɪsɪv]","pos":"adj.","meaning":"顺从的；服从的；柔顺的"},
-            {"word":"substance","phonetic":"['sʌbst(ə)ns]","pos":"n.","meaning":"物质；实质；资产；主旨"},
-            {"word":"substantial","phonetic":"[səb'stænʃ(ə)l]","pos":"adj./n.","meaning":"大量的；实质的；本质；重要材料"},
-            {"word":"suburb","phonetic":"[‘sʌbɜːb]","pos":"n.","meaning":"郊区；边缘"},
-            {"word":"suspect","phonetic":"[sə‘spekt]","pos":"n./adj./v.","meaning":"嫌疑犯；可疑的；不可信的；怀疑；猜想"},
-            {"word":"suspend","phonetic":"[sə'spend]","pos":"vt.","meaning":"延缓，推迟；使暂停；使悬浮"},
-            {"word":"sustain","phonetic":"[sə'steɪn]","pos":"vt.","meaning":"维持；支撑，承担；忍受"},
-            {"word":"transport","phonetic":"[træn'spɔːt]","pos":"n./vt.","meaning":"运输"},
-            {"word":"transplant","phonetic":"[træns'plɑ:nt]","pos":"v./n.","meaning":"移植；迁移；移植器官"},
-            {"word":"transform","phonetic":"[træns'fɔːm]","pos":"vt./vi.","meaning":"改变，使…变形；转换；变换，改变；转化"},
-            {"word":"transfer","phonetic":"[træns'fɜː]","pos":"n./vt./vi.","meaning":"转让；转移；传递；使转移"},
-            {"word":"unexpected","phonetic":"[ʌnɪk'spektɪd]","pos":"adj.","meaning":"意外的，想不到的"},
-            {"word":"unbelievable","phonetic":"[ʌnbɪ'liːvəbəl]","pos":"adj.","meaning":"难以置信的；不可信的"},
-            {"word":"unfortunately","phonetic":"[ʌnˈfɔːtʃənətli]","pos":"adv.","meaning":"不幸地"},
-            {"word":"uncover","phonetic":"[ʌn'kʌvə]","pos":"v.","meaning":"发现；揭开"}
-          ]
-        }
-      ]
-    }
+   {
+    "id": "lesson4",
+    "title": "Lesson 4 · 常见8个词根 (拿/行走/关闭/跑/说话/引导/制作/带来)",
+    "groups": [
+      {
+        "type": "root",
+        "affix": "cap, capt, cept ,ceive, cip, cup",
+        "logic": "表示“拿，抓，握住”",
+        "items": [
+          {"word":"receive","phonetic":"[rɪ'siːv]","pos":"vt./vi.","meaning":"收到；接待；接纳；接收"},
+          {"word":"reception","phonetic":"[rɪ'sepʃ(ə)n]","pos":"n.","meaning":"接待；接收；招待会"},
+          {"word":"except","phonetic":"[ɪk'sept]","pos":"vt./prep.","meaning":"不计；把…除外；除…之外"},
+          {"word":"exception","phonetic":"[ɪk'sepʃ(ə)n]","pos":"n.","meaning":"例外；异议"},
+          {"word":"occupy","phonetic":"['ɒkjʊpaɪ]","pos":"vt.","meaning":"占据，占领；居住；使忙碌"},
+          {"word":"occupation","phonetic":"[ˌɒkjuˈpeɪʃn]","pos":"n.","meaning":"职业；占有；占有期"},
+          {"word":"concept","phonetic":"['kɒnsept]","pos":"n.","meaning":"观念，概念"},
+          {"word":"discipline","phonetic":"['dɪsɪplɪn]","pos":"n.","meaning":"学科；纪律；训练"},
+          {"word":"capacity","phonetic":"[kə'pæsɪtɪ]","pos":"n.","meaning":"能力；容量；资格；生产力"},
+          {"word":"capable","phonetic":"['keɪpəb(ə)l]","pos":"adj.","meaning":"能干的，能胜任的；有才华的"},
+          {"word":"perceive","phonetic":"[pə'siːv]","pos":"vt./vi.","meaning":"察觉，感觉；理解；认知；感到；认识到"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "ced, ceed, cess",
+        "logic": "表示“行走，前进”",
+        "items": [
+          {"word":"ancestor","phonetic":"['ænsestə]","pos":"n.","meaning":"始祖，祖先；被继承人"},
+          {"word":"exceed","phonetic":"[ɪk'siːd]","pos":"vt.","meaning":"超过；胜过"},
+          {"word":"excess","phonetic":"[ɪk'ses]","pos":"n./adj.","meaning":"超过，超额；过度，过量；额外的，过量的"},
+          {"word":"excessive","phonetic":"[ɪk'sesɪv]","pos":"adj.","meaning":"过多的，极度的；过分的"},
+          {"word":"proceed","phonetic":"[prə'siːd]","pos":"vi.","meaning":"开始；继续进行；发生；行进"},
+          {"word":"accessible","phonetic":"[ək'sesɪb(ə)l]","pos":"adj.","meaning":"易接近的；可进入的；可理解的"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "clos, clud, clus",
+        "logic": "表示“关闭”",
+        "items": [
+          {"word":"conclude","phonetic":"[kən'kluːd]","pos":"vt.","meaning":"推断；决定，作结论"},
+          {"word":"conclusion","phonetic":"[kən'kluːʒən]","pos":"n.","meaning":"结论；结局；推论"},
+          {"word":"exclude","phonetic":"[ɪk'skluːd]","pos":"vt.","meaning":"排除；排斥；逐出"},
+          {"word":"exclusive","phonetic":"[ɪk'skluːsɪv]","pos":"adj.","meaning":"独有的；排外的；专一的"},
+          {"word":"include","phonetic":"[ɪn'kluːd]","pos":"vt.","meaning":"包含，包括"},
+          {"word":"preclude","phonetic":"[prɪ'kluːd]","pos":"vt.","meaning":"排除；妨碍；阻止"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "cur, curs, cours",
+        "logic": "表示“跑，发生”",
+        "items": [
+          {"word":"current","phonetic":"['kʌrənt]","pos":"adj./n.","meaning":"现在的；流通的；最近的；（水/气/电）流；趋势"},
+          {"word":"currency","phonetic":"['kʌrənsɪ]","pos":"n.","meaning":"货币；通货"},
+          {"word":"concur","phonetic":"[kən‘kɜ:(r)]","pos":"vi.","meaning":"同意；一致；互助"},
+          {"word":"incur","phonetic":"[ɪn‘kɜ:(r)]","pos":"vt.","meaning":"招致，引发；蒙受"},
+          {"word":"occur","phonetic":"[əˈkɜ:(r)]","pos":"vi.","meaning":"发生；出现；存在"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "dict, dic",
+        "logic": "表示“说话，断言”",
+        "items": [
+          {"word":"dictator","phonetic":"[ˈdɪkˌteɪtə]","pos":"n.","meaning":"独裁者；命令者"},
+          {"word":"predict","phonetic":"[prɪ'dɪkt]","pos":"vt.","meaning":"预报，预言；预知"},
+          {"word":"addict","phonetic":"[ə'dɪkt]","pos":"n./vt.","meaning":"有瘾的人；入迷的人；使沉溺"},
+          {"word":"addictive","phonetic":"[əˈdɪktɪv]","pos":"adj.","meaning":"上瘾的"},
+          {"word":"verdict","phonetic":"[ˈvɜ:dɪkt]","pos":"n.","meaning":"结论；裁定"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "duc, duct",
+        "logic": "表示“引导，带来”",
+        "items": [
+          {"word":"educate","phonetic":"['edʒʊkeɪt]","pos":"vt./vi.","meaning":"教育；培养；训练"},
+          {"word":"reduce","phonetic":"[rɪ'djuːs]","pos":"vt./vi.","meaning":"减少；降低；缩小"},
+          {"word":"produce","phonetic":"[prə'djuːs]","pos":"vt.","meaning":"生产；引起；创作"},
+          {"word":"productive","phonetic":"[prə'dʌktɪv]","pos":"adj.","meaning":"能生产的；生产的；多产的；富有成效的"},
+          {"word":"introduction","phonetic":"[ˌɪntrəˈdʌkʃn]","pos":"n.","meaning":"介绍；引进；采用；入门；传入"},
+          {"word":"conduct","phonetic":"[kən'dʌkt]","pos":"vi./vt./n.","meaning":"导电；带领；管理；引导；进行；行为；实施"},
+          {"word":"conductor","phonetic":"[kənˈdʌktə(r)]","pos":"n.","meaning":"导体；售票员；领导者；管理人"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "fac, fact, fect, fic, fig",
+        "logic": "表示“做，制作”",
+        "items": [
+          {"word":"fiction","phonetic":"['fɪkʃən]","pos":"n.","meaning":"虚构；小说；编造"},
+          {"word":"factory","phonetic":"['fæktərɪ]","pos":"n.","meaning":"工厂；制造厂"},
+          {"word":"perfect","phonetic":"['pɜːfɪkt]","pos":"adj./vt.","meaning":"完美的；最好的；使完美；使熟练"},
+          {"word":"defect","phonetic":"['di:fekt]","pos":"n./vi.","meaning":"缺点，缺陷；不足之处；变节；叛变"},
+          {"word":"facility","phonetic":"[fəˈsɪləti]","pos":"n.","meaning":"设施；设备；容易；灵巧"},
+          {"word":"manufacture","phonetic":"[ˌmænjʊ'fæktʃə(r)]","pos":"n./v.","meaning":"制造；产品；制造业；加工"},
+          {"word":"figure","phonetic":"['fɪgə]","pos":"n./v.","meaning":"数字；人物；图形；计算"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "fer",
+        "logic": "表示“带来，拿来”",
+        "items": [
+          {"word":"offer","phonetic":"['ɒfə(r)]","pos":"vt./n.","meaning":"提供；出价；提议；意图；录取通知书"},
+          {"word":"differ","phonetic":"['dɪfə]","pos":"vt./vi.","meaning":"使…相异；使…不同；相异；意见分歧"},
+          {"word":"ferry","phonetic":"['ferɪ]","pos":"n./vt.","meaning":"渡船；摆渡；渡口；（乘渡船）渡过；用渡船运送"},
+          {"word":"conference","phonetic":"[ˈkɒnfərəns]","pos":"n.","meaning":"会议；讨论；协商"},
+          {"word":"reference","phonetic":"['refrəns]","pos":"n./v.","meaning":"参考，参照；涉及；参考书目；引用"},
+          {"word":"difference","phonetic":"['dɪfrəns]","pos":"n.","meaning":"差异；不同；争执"},
+          {"word":"indifference","phonetic":"[ɪnˈdɪfrəns]","pos":"n.","meaning":"漠不关心；冷淡；不重视；中立"},
+          {"word":"fertile","phonetic":"['fɜ:taɪl]","pos":"adj.","meaning":"富饶的，肥沃的；能生育的"},
+          {"word":"fertilizer","phonetic":"[ˈfɜ:təlaɪzə(r)]","pos":"n.","meaning":"[肥料] 肥料"}
+        ]
+      }
+    ]
+  },
+   {
+    "id": "lesson5",
+    "title": "Lesson 5 · 常见9个词根 (形状/出生/写/投掷/送/放/写/相似/看)",
+    "groups": [
+      {
+        "type": "root",
+        "affix": "form",
+        "logic": "表示“形状”",
+        "items": [
+          {"word":"form","phonetic":"[fɔ:m]","pos":"n./vt.","meaning":"形式，形状；形态；构成，组成"},
+          {"word":"formal","phonetic":"[ˈfɔ:ml]","pos":"adj.","meaning":"正式的；拘谨的；有条理的"},
+          {"word":"inform","phonetic":"[ɪn‘fɔ:m]","pos":"vt./vi.","meaning":"通知；告诉；报告；告发；告密"},
+          {"word":"reform","phonetic":"[rɪ‘fɔ:m]","pos":"n./vt.","meaning":"改革，改良；改正；改革，革新；重新组成"},
+          {"word":"conform","phonetic":"[kən‘fɔ:m]","pos":"vi./vt.","meaning":"符合；遵照；适应环境；使遵守；使顺从"},
+          {"word":"transform","phonetic":"[træns‘fɔ:m]","pos":"vt./vi.","meaning":"改变，使…变形；转换；变换，改变；转化"},
+          {"word":"perform","phonetic":"[pə‘fɔ:m]","pos":"v.","meaning":"执行；演奏"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "gen, gener, genit",
+        "logic": "表示“出生，产生”",
+        "items": [
+          {"word":"gene","phonetic":"[dʒiːn]","pos":"n.","meaning":"基因，遗传因子"},
+          {"word":"generate","phonetic":"['dʒenəreɪt]","pos":"vt.","meaning":"使形成；发生"},
+          {"word":"regenerate","phonetic":"[rɪ‘dʒenəreɪt]","pos":"vt./adj.","meaning":"使再生；革新；再生的；革新的"},
+          {"word":"generation","phonetic":"[ˌdʒenəˈreɪʃn]","pos":"n.","meaning":"一代；产生；一代人"},
+          {"word":"generous","phonetic":"[ˈdʒenərəs]","pos":"adj.","meaning":"慷慨的，大方的；宽宏大量的"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "graph, gram",
+        "logic": "表示“写，描绘”",
+        "items": [
+          {"word":"graph","phonetic":"[grɑːf]","pos":"n.","meaning":"图表；曲线图"},
+          {"word":"photography","phonetic":"[fəˈtɒgrəfi]","pos":"n.","meaning":"摄影；摄影术"},
+          {"word":"telegraph","phonetic":"[‘telɪɡrɑ:f]","pos":"n./vt.","meaning":"电报机，电报；电汇；打电报给…"},
+          {"word":"monograph","phonetic":"['mɒnəɡrɑ:f]","pos":"n.","meaning":"专题著作；专题论文"},
+          {"word":"autograph","phonetic":"['ɔ:təɡrɑ:f]","pos":"n.","meaning":"亲笔，手稿；亲笔签名"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "ject",
+        "logic": "表示“投掷，扔”",
+        "items": [
+          {"word":"inject","phonetic":"[ɪn‘dʒekt]","pos":"vt.","meaning":"注入；注射"},
+          {"word":"eject","phonetic":"[ɪ'dʒekt]","pos":"vt.","meaning":"喷射；驱逐，逐出"},
+          {"word":"reject","phonetic":"['ri:dʒekt]","pos":"vt.","meaning":"拒绝；排斥；抵制；丢弃"},
+          {"word":"project","phonetic":"[prəˈdʒekt]","pos":"v./n.","meaning":"设计；计划；工程；计划"},
+          {"word":"objective","phonetic":"[əbˈdʒektɪv]","pos":"adj./n.","meaning":"客观的；目标的；目的；目标"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "miss, mit",
+        "logic": "表示“送，放出”",
+        "items": [
+          {"word":"admission","phonetic":"[ədˈmɪʃn]","pos":"n.","meaning":"承认；入场费"},
+          {"word":"commission","phonetic":"[kə'mɪʃn]","pos":"n.","meaning":"委员会；佣金"},
+          {"word":"emission","phonetic":"[ɪ'mɪʃn]","pos":"n.","meaning":"（光、热等的）发射，散发；喷射；发行"},
+          {"word":"permission","phonetic":"[pəˈmɪʃn]","pos":"n.","meaning":"允许，许可"},
+          {"word":"submission","phonetic":"[səbˈmɪʃn]","pos":"n.","meaning":"投降；提交；服从"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "pon, pound, pos, posit",
+        "logic": "表示“放”",
+        "items": [
+          {"word":"component","phonetic":"[kəmˈpəʊnənt]","pos":"adj./n.","meaning":"组成的，构成的；成分；组件；元件"},
+          {"word":"opponent","phonetic":"[əˈpəʊnənt]","pos":"n./adj.","meaning":"对手；反对者；敌手；对立的；敌对的"},
+          {"word":"position","phonetic":"[pə'zɪʃən]","pos":"n.","meaning":"位置，方位；职位，工作；姿态"},
+          {"word":"compose","phonetic":"[kəm'pəʊz]","pos":"vt./vi.","meaning":"构成；写作；使平静；组成；作曲"},
+          {"word":"dispose","phonetic":"[dɪ'spəʊz]","pos":"v./n.","meaning":"处理；处置；安排；处置；性情"},
+          {"word":"expose","phonetic":"[ɪk'spəʊz]","pos":"vt.","meaning":"揭露，揭发；使曝光；显示"},
+          {"word":"impose","phonetic":"[ɪm'pəʊz]","pos":"vt./vi.","meaning":"强加；征税；利用；欺骗；施加影响"},
+          {"word":"deposit","phonetic":"[dɪ'pɒzɪt]","pos":"n./vt./vi.","meaning":"存款；押金；订金；保证金；使沉积；沉淀"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "scrib, script",
+        "logic": "表示“写”",
+        "items": [
+          {"word":"describe","phonetic":"[dɪ'skraɪb]","pos":"vt.","meaning":"描述，形容；描绘"},
+          {"word":"prescribe","phonetic":"[prɪ'skraɪb]","pos":"v.","meaning":"规定；开药方"},
+          {"word":"subscribe","phonetic":"[səb‘skraɪb]","pos":"vi./vt.","meaning":"订阅；捐款；认购；签署；赞成；捐助"},
+          {"word":"description","phonetic":"[dɪˈskrɪpʃn]","pos":"n.","meaning":"描述，描写；类型；说明书"},
+          {"word":"transcript","phonetic":"[ˈtrænskrɪpt]","pos":"n.","meaning":"成绩单；抄本，副本"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "simil, simul, sembl",
+        "logic": "表示“相类似，一样”",
+        "items": [
+          {"word":"assimilate","phonetic":"[ə'sɪməleɪt]","pos":"vt./vi.","meaning":"吸收；使同化；把…比作；吸收；同化"},
+          {"word":"simulate","phonetic":"[‘sɪmjʊleɪt]","pos":"vt./adj.","meaning":"模仿；假装；冒充；模仿的；假装的"},
+          {"word":"assemble","phonetic":"[ə‘sembl]","pos":"vt.","meaning":"集合，聚集；装配；收集"},
+          {"word":"resemble","phonetic":"[rɪ'zembəl]","pos":"vt.","meaning":"类似，像"}
+        ]
+      },
+      {
+        "type": "root",
+        "affix": "spect, spic",
+        "logic": "表示“看”",
+        "items": [
+          {"word":"respect","phonetic":"[rɪ'spekt]","pos":"n./vt.","meaning":"尊敬，尊重；方面；尊敬，尊重；遵守"},
+          {"word":"suspect","phonetic":"[sə'spekt]","pos":"n./adj./v.","meaning":"嫌疑犯；可疑的；不可信的；怀疑；猜想"},
+          {"word":"expect","phonetic":"[ɪk'spekt]","pos":"vt./vi.","meaning":"期望；指望；期待；预期"},
+          {"word":"suspicion","phonetic":"[sə'spɪʃən]","pos":"n.","meaning":"怀疑；嫌疑；疑心"},
+          {"word":"inspect","phonetic":"[ɪn‘spekt]","pos":"vt.","meaning":"检查；视察；检阅"},
+          {"word":"perspective","phonetic":"[pə‘spektɪv]","pos":"n./adj.","meaning":"观点；远景；透视图；透视的"},
+          {"word":"prospect","phonetic":"[‘prɒspekt]","pos":"n./v.","meaning":"前途；预期；景色；勘探"},
+          {"word":"respective","phonetic":"[rɪˈspektɪv]","pos":"adj.","meaning":"分别的，各自的"}
+        ]
+      }
+    ]
+  }
   ],
   "global_test": {
     "sections": ["spelling", "phonetic", "logic", "meaning"]
