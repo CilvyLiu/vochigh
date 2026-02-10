@@ -121,7 +121,7 @@
                      :class="{'animate-pulse border-red-500': isError}"
                      :style="!isError ? { borderColor: quizInput ? getThemeColor(quizList[quizIdx].type) : 'transparent', borderWidth: '2px' } : {}">
                     
-                    <button @click="playTTS(quizList[quizIdx].word)" class="w-16 h-16 rounded-full bg-black/5 mb-6 text-xl btn-active">🔊</button>
+                    <button @click="play(quizList[quizIdx].word)" class="w-16 h-16 rounded-full bg-black/5 mb-6 text-xl btn-active">🔊</button>
                     
                     <div class="inline-block px-2 py-0.5 rounded text-[8px] font-bold mb-2 uppercase opacity-60"
                          :class="'bg-' + quizList[quizIdx].type">
@@ -172,38 +172,38 @@
                 const playTTS = (text) => {
                     if(!text) return;
                     
-                    // 强制取消之前的播放任务，防止排队
+                    // 立即停止所有之前的发声，清理队列
                     window.speechSynthesis.cancel();
                 
-                    const utter = new SpeechSynthesisUtterance(text);
-                    
-                    // 寻找语音库
-                    const getBestVoice = () => {
+                    // 延迟一小会儿执行，给浏览器一点喘息时间（解决 synthesis-failed 常见手段）
+                    setTimeout(() => {
+                        const utter = new SpeechSynthesisUtterance(text);
+                        
+                        // 获取所有可用的声音
                         const voices = window.speechSynthesis.getVoices();
-                        // 1. 优先尝试标准的英式英语 (Nova 的首选)
-                        // 2. 其次尝试任何英语
-                        return voices.find(v => v.lang.includes('en-GB') && v.localService) || 
-                               voices.find(v => v.lang.includes('en-GB')) ||
-                               voices.find(v => v.lang.includes('en'));
-                    };
+                        
+                        // 【关键】强制筛选 localService: true 的离线声音
+                        // 优先英国离线音，其次美国离线音，最后任意离线音
+                        const localVoice = voices.find(v => v.lang.includes('en-GB') && v.localService) || 
+                                           voices.find(v => v.lang.includes('en-US') && v.localService) ||
+                                           voices.find(v => v.localService);
+                        
+                        if (localVoice) {
+                            utter.voice = localVoice;
+                            console.log("Using Local Voice:", localVoice.name);
+                        }
                 
-                    const runSpeak = () => {
-                        const voice = getBestVoice();
-                        if (voice) utter.voice = voice;
                         utter.lang = 'en-GB';
-                        utter.rate = 0.85; // 稍微放慢一点点，更清晰
+                        utter.rate = 0.8; 
+                        
+                        // 错误监控
+                        utter.onerror = (e) => {
+                            console.error("TTS Error Details:", e.error);
+                            // 如果是因为 synthesis-failed，通常是因为并发调用，不再递归重试以防崩溃
+                        };
+                
                         window.speechSynthesis.speak(utter);
-                    };
-                
-                    // 针对 Chrome/Edge 的特殊处理：如果语音库还没加载完，监听加载后再播
-                    if (window.speechSynthesis.getVoices().length === 0) {
-                        window.speechSynthesis.onvoiceschanged = runSpeak;
-                    } else {
-                        runSpeak();
-                    }
-                
-                    // 报错监控：如果还是没声，看控制台
-                    utter.onerror = (e) => console.error("TTS 播放出错:", e);
+                    }, 50); 
                 };
 
                 const loadData = async () => {
