@@ -170,12 +170,11 @@
     </div>
     <script>
         const { createApp, ref, computed, onMounted } = Vue;
-
+    
         createApp({
             setup() {
                 const view = ref('home');
                 const allLessons = ref([]);
-                const currentLessonId = ref('lesson1');
                 const activeLesson = ref(null);
                 const studyIdx = ref(0);
                 
@@ -184,25 +183,43 @@
                 const quizInput = ref('');
                 const quizScore = ref(0);
                 const isError = ref(false);
-
-                // 数据加载：支持多种 JSON 层级格式
+    
+                // 1. 数据加载：增加缓存清理机制，防止 data.json 更新后不生效
                 onMounted(async () => {
                     try {
-                        const res = await fetch('data.json');
+                        const res = await fetch('data.json?v=' + Date.now());
                         const data = await res.json();
-                        if (Array.isArray(data)) {
-                            allLessons.value = data;
-                        } else if (data.lessons) {
-                            allLessons.value = data.lessons;
-                        } else {
-                            allLessons.value = [data];
-                        }
+                        allLessons.value = data.lessons || (Array.isArray(data) ? data : [data]);
                     } catch (e) {
                         console.error("Data Load Error:", e);
                     }
+                    
+                    // 预热语音系统（移动端适配关键）
+                    window.speechSynthesis.getVoices();
                 });
-
-                // 核心逻辑：打平数据结构，注入类型与逻辑
+    
+                // 2. 语音播报逻辑：强制锁定英音 (en-GB)
+                const playTTS = (text) => {
+                    if (!text) return;
+                    window.speechSynthesis.cancel();
+                    
+                    const utter = new SpeechSynthesisUtterance(text);
+                    
+                    // 尝试寻找最纯正的英国口音
+                    const voices = window.speechSynthesis.getVoices();
+                    const britishVoice = voices.find(v => v.lang === 'en-GB' || v.lang.includes('en-GB'));
+                    
+                    if (britishVoice) {
+                        utter.voice = britishVoice;
+                    }
+                    
+                    utter.lang = 'en-GB';
+                    utter.rate = 0.9;  // 稍微慢一点，更清楚
+                    utter.pitch = 1.0;
+                    
+                    window.speechSynthesis.speak(utter);
+                };
+    
                 const getFlatWords = (lesson) => {
                     if (!lesson || !lesson.groups) return [];
                     return lesson.groups.flatMap(g => 
@@ -217,36 +234,34 @@
                 
                 const flatWords = computed(() => getFlatWords(activeLesson.value));
                 const currentWord = computed(() => flatWords.value[studyIdx.value] || {});
-
-                // 视图切换与学习逻辑
+    
                 const startStudy = (lesson) => {
                     activeLesson.value = lesson;
-                    currentLessonId.value = lesson.id;
                     studyIdx.value = 0;
                     view.value = 'study';
+                    // 移动端：通过这一步点击正式解锁播放权限
+                    playTTS(getFlatWords(lesson)[0]?.word);
                 };
-
+    
                 const nextStudyStep = () => {
                     if (studyIdx.value < flatWords.value.length - 1) {
                         studyIdx.value++;
-                        playTTS(currentWord.value.word);
+                        // 延迟一丢丢播放，确保计算属性已经更新
+                        setTimeout(() => playTTS(currentWord.value.word), 50);
                     } else {
                         view.value = 'result';
                     }
                 };
-
-                // 测试逻辑
+    
                 const startLessonQuiz = (lesson) => {
-                    const words = getFlatWords(lesson);
-                    initQuiz(words);
+                    initQuiz(getFlatWords(lesson));
                 };
-
+    
                 const startTotalQuiz = () => {
-                    if (!allLessons.value || allLessons.value.length === 0) return;
                     const total = allLessons.value.flatMap(l => getFlatWords(l));
                     initQuiz(total);
                 };
-
+    
                 const initQuiz = (words) => {
                     quizList.value = [...words].sort(() => Math.random() - 0.5);
                     quizIdx.value = 0;
@@ -254,7 +269,7 @@
                     quizInput.value = '';
                     view.value = 'quiz';
                 };
-
+    
                 const handleQuizSubmit = () => {
                     const target = quizList.value[quizIdx.value].word.toLowerCase().trim();
                     if (quizInput.value.toLowerCase().trim() === target) {
@@ -270,19 +285,11 @@
                         setTimeout(() => isError.value = false, 500);
                     }
                 };
-
-                // 语音播报：强制英音 (GB)
-                const playTTS = (text) => {
-                    window.speechSynthesis.cancel();
-                    const utter = new SpeechSynthesisUtterance(text);
-                    utter.lang = 'en-GB';
-                    window.speechSynthesis.speak(utter);
-                };
-
+    
                 const goHome = () => { view.value = 'home'; };
-
+    
                 return {
-                    view, allLessons, currentLessonId, activeLesson, studyIdx, flatWords, currentWord,
+                    view, allLessons, activeLesson, studyIdx, flatWords, currentWord,
                     quizList, quizIdx, quizInput, quizScore, isError,
                     startStudy, nextStudyStep, startLessonQuiz, startTotalQuiz, handleQuizSubmit, playTTS, goHome
                 };
