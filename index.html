@@ -172,38 +172,38 @@
                 const playTTS = (text) => {
                     if(!text) return;
                     
-                    // 立即停止所有之前的发声，清理队列
+                    // 1. 彻底清除之前的语音队列，防止声音重叠或冲突
                     window.speechSynthesis.cancel();
                 
-                    // 延迟一小会儿执行，给浏览器一点喘息时间（解决 synthesis-failed 常见手段）
+                    // 2. 稍微延迟启动，确保浏览器资源已释放
                     setTimeout(() => {
                         const utter = new SpeechSynthesisUtterance(text);
                         
-                        // 获取所有可用的声音
                         const voices = window.speechSynthesis.getVoices();
                         
-                        // 【关键】强制筛选 localService: true 的离线声音
-                        // 优先英国离线音，其次美国离线音，最后任意离线音
-                        const localVoice = voices.find(v => v.lang.includes('en-GB') && v.localService) || 
-                                           voices.find(v => v.lang.includes('en-US') && v.localService) ||
-                                           voices.find(v => v.localService);
-                        
-                        if (localVoice) {
-                            utter.voice = localVoice;
-                            console.log("Using Local Voice:", localVoice.name);
+                        // 3. 寻找最好听的声音 (按优先级排序)
+                        // 优先：Microsoft Online (Natural) - 英音
+                        // 其次：Google / Apple - 英音
+                        // 最后：任何包含 GB 的英音
+                        const bestVoice = voices.find(v => v.name.includes('Online') && v.lang.includes('en-GB')) ||
+                                          voices.find(v => v.lang.includes('en-GB')) ||
+                                          voices.find(v => v.lang.includes('en-US'));
+                
+                        if (bestVoice) {
+                            utter.voice = bestVoice;
+                            // 只有当声音库加载成功时才在控制台记录，保持 Nova 的实验室环境整洁
+                            if (bestVoice.name.includes('Online')) {
+                                console.log("Using Premium Voice:", bestVoice.name);
+                            }
                         }
                 
                         utter.lang = 'en-GB';
-                        utter.rate = 0.8; 
+                        utter.rate = 0.9;  // 恢复到你喜欢的标准语速
+                        utter.pitch = 1;
                         
-                        // 错误监控
-                        utter.onerror = (e) => {
-                            console.error("TTS Error Details:", e.error);
-                            // 如果是因为 synthesis-failed，通常是因为并发调用，不再递归重试以防崩溃
-                        };
-                
+                        // 4. 处理浏览器自动播放拦截
                         window.speechSynthesis.speak(utter);
-                    }, 50); 
+                    }, 100); 
                 };
 
                 const loadData = async () => {
