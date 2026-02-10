@@ -176,35 +176,71 @@
                     audio.play().catch(e => console.error("云端引擎失败:", e));
                 };
 
-                const playTTS = (text) => {
+               const playTTS = (text) => {
                     if(!text) return;
+                    
+                    // 1. 强力激活移动端音频上下文
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContext) {
+                        const context = new AudioContext();
+                        if (context.state === 'suspended') {
+                            context.resume();
+                        }
+                        // 创建一个极其微弱的振荡器并立即停止，强制系统分配音频资源
+                        const oscillator = context.createOscillator();
+                        const gainNode = context.createGain();
+                        gainNode.gain.value = 0.001; // 几乎无声
+                        oscillator.connect(gainNode);
+                        gainNode.connect(context.destination);
+                        oscillator.start(0);
+                        oscillator.stop(0.01);
+                    }
+                
+                    // 2. 彻底重置语音引擎
                     window.speechSynthesis.cancel();
                     
+                    // 3. 判断设备环境
+                    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
                     const isAndroid = /Android/i.test(navigator.userAgent);
+                
+                    // 如果是安卓，直接走有道云端（安卓原生TTS兼容性太差）
                     if (isAndroid) {
                         playCloudAudio(text);
                     } else {
+                        // iOS 或 PC 尝试原生 Neural 语音
                         const utter = new SpeechSynthesisUtterance(text);
                         const voices = window.speechSynthesis.getVoices();
+                        
+                        // 优先匹配 Nova 喜欢的英式高级女声
                         const premiumVoice = voices.find(v => v.name.includes('Natural') || v.name.includes('Online')) || 
                                            voices.find(v => v.lang.includes('en-GB'));
                         
                         if(premiumVoice) utter.voice = premiumVoice;
                         utter.lang = 'en-GB';
-                        utter.rate = 0.9;
-
+                        utter.rate = 0.85; // 稍微调慢一点点，更优雅
+                
                         let hasStarted = false;
+                        
+                        // 4. 关键：500ms 哨兵逻辑
                         const fallbackTimer = setTimeout(() => {
-                            if (!hasStarted) playCloudAudio(text);
+                            if (!hasStarted) {
+                                console.log("原生引擎响应超时，切换有道云端...");
+                                playCloudAudio(text);
+                            }
                         }, 500);
-
+                
                         utter.onstart = () => {
                             hasStarted = true;
                             clearTimeout(fallbackTimer);
                         };
-
+                
+                        // 针对 iOS 的特殊处理：必须在用户交互的回调中执行
                         window.speechSynthesis.speak(utter);
-                        if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+                        
+                        // 解决部分浏览器 speak 挂起的问题
+                        if (window.speechSynthesis.paused) {
+                            window.speechSynthesis.resume();
+                        }
                     }
                 };
 
