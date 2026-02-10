@@ -137,38 +137,258 @@
       ]
     },
     {
-      "id": "lesson3",
-      "title": "Lesson 3 · 常见的11个前缀",
-      "groups": [
-        {
-          "type": "prefix",
-          "affix": "im-/in-",
-          "logic": "表示“不，无，非；向内，进入”",
-          "items": [
-            {"word":"independent","phonetic":"[,ɪndɪ'pendənt]","pos":"adj./n.","meaning":"独立的；单独的；独立自主者；无党派者"},
-            {"word":"inconvenience","phonetic":"[ɪnkən'viːnɪəns]","pos":"n.","meaning":"不便；麻烦"},
-            {"word":"immoral","phonetic":"[ɪ'mɔrəl]","pos":"adj.","meaning":"不道德的；邪恶的"},
-            {"word":"indifferent","phonetic":"[ɪn'dɪfrənt]","pos":"adj.","meaning":"漠不关心的；无关紧要的"},
-            {"word":"impressive","phonetic":"[ɪm‘prɛsɪv]","pos":"adj.","meaning":"感人的；令人钦佩的；给人以深刻印象的"},
-            {"word":"impression","phonetic":"[ɪm'preʃ(ə)n]","pos":"n.","meaning":"印象；效果，影响"},
-            {"word":"infect","phonetic":"[ɪn'fekt]","pos":"vt.","meaning":"感染，传染"},
-            {"word":"infer","phonetic":"[ɪn'fɜː]","pos":"vt./vi.","meaning":"推断；推论；作出推论"},
-            {"word":"influence","phonetic":"['ɪnflʊəns]","pos":"n./vt.","meaning":"影响；势力；有影响的人或事；影响；改变"}
-          ]
-        },
-        {
-          "type": "prefix",
-          "affix": "inter-",
-          "logic": "表示“在…之间，相互”",
-          "items": [
-            {"word":"international","phonetic":"[ɪntə'næʃənəl]","pos":"adj.","meaning":"国际的"},
-            {"word":"interpersonal","phonetic":"[ɪntə'pɜːsənəl]","pos":"adj.","meaning":"人际的；人与人之间的"},
-            {"word":"interaction","phonetic":"[,ɪntə‘rækʃən]","pos":"n.","meaning":"相互作用；交互作用"},
-            {"word":"intersection","phonetic":"[,ɪntɚ‘sɛkʃən]","pos":"n.","meaning":"交叉；十字路口；交集；交叉点"}
-          ]
-        }
-      ]
-    },
+    "id": "lesson2",
+    "title": "Lesson 2 · 常见前缀 (加强/共同/否定/出入/前任)",
+    "groups": [
+      {
+        "type": "prefix",
+        "affix": "ac-/ad-/af-/ag-/an-/ap-/ar-/as-/at-",
+        "logic": "加在同辅音字母词根前，表示“一再”等加强意",
+        "items": [
+          {"word":"account","phonetic":"[əˈkaʊnt]","pos":"n.","meaning":"账户；解释；账目，账单"},
+          {"word":"addict","phonetic":"[əˈdɪkt]","pos":"n./vt.","meaning":"有瘾的人；入迷的人；使沉溺；使上瘾"},
+          {"word":"afford","phonetic":"[əˈfɔ:d]","pos":"vt.","meaning":"给予，提供；买得起"},
+          {"word":"appointment","phonetic":"[əˈpɔɪntmənt]","pos":"n.","meaning":"任命；约定；任命的职位"},
+          {"word":"announce","phonetic":"[ə'naʊns]","pos":"vt.","meaning":"宣布；述说；预示；播报"},
+          {"word":"approach","phonetic":"[ə'prəʊtʃ]","pos":"n./vt.","meaning":"方法；途径；接近"},
+          {"word":"aggressive","phonetic":"[ə'gresɪv]","pos":"adj.","meaning":"侵略性的；好斗的；有进取心的"},
+          {"word":"arrest","phonetic":"[ə'rest]","pos":"vt.","meaning":"逮捕；阻止"},
+          {"word":"assure","phonetic":"[ə'ʃʊr]","pos":"vt.","meaning":"保证；担保"},
+          {"word":"assimilate","phonetic":"[ə'sɪmɪleɪt]","pos":"vt.","meaning":"吸收；使同化"},
+          {"word":"associate","phonetic":"[ə'səʊʃɪeɪt]","pos":"n./vt.","meaning":"同事，伙伴；联想；使联合"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "com-/con-",
+        "logic": "表示“共同”",
+        "items": [
+          {"word":"combine","phonetic":"[kəm'baɪn]","pos":"vt.","meaning":"使化合；使联合，使结合"},
+          {"word":"comparison","phonetic":"[kəmˈpærɪsn]","pos":"n.","meaning":"比较；对照；比喻；比较关系"},
+          {"word":"communicate","phonetic":"[kəˈmjuːnɪkeɪt]","pos":"vi.","meaning":"通讯，传达；相通；交流"},
+          {"word":"compete","phonetic":"[kəmˈpiːt]","pos":"vi.","meaning":"竞争；比赛；对抗"},
+          {"word":"compose","phonetic":"[kəm'pəʊz]","pos":"vt./vi.","meaning":"构成；写作；使平静；组成；作曲"},
+          {"word":"complex","phonetic":"[ˈkɒmpleks]","pos":"adj.","meaning":"复杂的；合成的"},
+          {"word":"comprehensive","phonetic":"[ˌkɒmprɪˈhensɪv]","pos":"adj.","meaning":"综合的；广泛的；有理解力的"},
+          {"word":"concept","phonetic":"['kɒnsept]","pos":"n.","meaning":"观念，概念"},
+          {"word":"contemporary","phonetic":"[kən'temp(ə)r(ər)ɪ]","pos":"n./adj.","meaning":"同时代的人；当代的；同时代"},
+          {"word":"conclude","phonetic":"[kən'kluːd]","pos":"vt.","meaning":"推断；决定；作结论"},
+          {"word":"confirm","phonetic":"[kən'fɜːm]","pos":"vt.","meaning":"确认；确定；证实；批准"},
+          {"word":"confine","phonetic":"[kənˈfaɪn]","pos":"n./vt.","meaning":"界限，边界；约束；限制；限制；禁闭"},
+          {"word":"conflict","phonetic":"['kɒnflɪkt]","pos":"n./vi.","meaning":"冲突，矛盾；斗争；冲突，抵触；争执"},
+          {"word":"contribute","phonetic":"[kənˈtrɪbju:t]","pos":"vt.","meaning":"贡献，出力；投稿；捐献"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "de-",
+        "logic": "1. 表示向下，去掉，变慢，变坏，离开等；2. 表示使…成为，加强",
+        "items": [
+          {"word":"depression","phonetic":"[dɪ'preʃ(ə)n]","pos":"n.","meaning":"沮丧；洼地；不景气；忧愁"},
+          {"word":"destruction","phonetic":"[dɪ'strʌkʃ(ə)n]","pos":"n.","meaning":"破坏，毁灭；摧毁"},
+          {"word":"detect","phonetic":"[dɪ'tekt]","pos":"vt.","meaning":"察觉；发现；探测"},
+          {"word":"deceive","phonetic":"[dɪ'siːv]","pos":"v.","meaning":"欺骗；行骗"},
+          {"word":"departure","phonetic":"[dɪ'pɑːtʃə]","pos":"n.","meaning":"离开；出发；违背"},
+          {"word":"depict","phonetic":"[dɪ'pɪkt]","pos":"vt.","meaning":"描述；描画"},
+          {"word":"define","phonetic":"[dɪ'faɪn]","pos":"vt.","meaning":"定义；使明确；规定"},
+          {"word":"definite","phonetic":"['defɪnɪt]","pos":"adj.","meaning":"一定的；确切的"},
+          {"word":"definition","phonetic":"[defɪ'nɪʃ(ə)n]","pos":"n.","meaning":"定义；清晰度"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "dis-",
+        "logic": "1. 不；消失；离开；2. 分开，分离",
+        "items": [
+          {"word":"discourage","phonetic":"[dɪs'kʌrɪdʒ]","pos":"vt.","meaning":"阻止；使气馁"},
+          {"word":"disorder","phonetic":"[dɪs'ɔːdə]","pos":"n./vt.","meaning":"混乱；骚乱；使失调；扰乱"},
+          {"word":"discuss","phonetic":"[dɪ‘skʌs]","pos":"vt.","meaning":"讨论；论述，辩论"},
+          {"word":"dispense","phonetic":"[dɪ'spens]","pos":"vt.","meaning":"分配，分发；免除"},
+          {"word":"distract","phonetic":"[dɪ‘strækt]","pos":"vt.","meaning":"转移；分心"},
+          {"word":"dismiss","phonetic":"[dɪs‘mɪs]","pos":"vt.","meaning":"解散；解雇；开除"},
+          {"word":"discipline","phonetic":"['dɪsɪplɪn]","pos":"n./vt.","meaning":"学科；纪律；训练，训导"},
+          {"word":"discount","phonetic":"['dɪskaʊnt]","pos":"n./vt.","meaning":"折扣；打折扣"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "e-",
+        "logic": "表示“出，出来”",
+        "items": [
+          {"word":"eject","phonetic":"[ɪ'dʒekt]","pos":"vt.","meaning":"喷射；驱逐，逐出"},
+          {"word":"emerge","phonetic":"[ɪ'mɜːdʒ]","pos":"vi.","meaning":"浮现；摆脱；暴露"},
+          {"word":"evade","phonetic":"[ɪ'veɪd]","pos":"vt.","meaning":"逃避；规避；逃脱"},
+          {"word":"emission","phonetic":"[ɪ'mɪʃ(ə)n]","pos":"n.","meaning":"（光、热等的）发射，散发；喷射；发行"},
+          {"word":"evaluation","phonetic":"[ɪˌvæljuˈeɪʃn]","pos":"n.","meaning":"评价；评估"},
+          {"word":"eruption","phonetic":"[ɪ'rʌpʃn]","pos":"n.","meaning":"爆发，喷发"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "en-/em-",
+        "logic": "表示进入，包围",
+        "items": [
+          {"word":"embarrass","phonetic":"[im'bærəs]","pos":"vt.","meaning":"使局促不安；使困窘；阻碍"},
+          {"word":"enroll","phonetic":"[in'rəul]","pos":"vt./vi.","meaning":"登记；使加入；参加；注册"},
+          {"word":"enact","phonetic":"[ɪ'nækt]","pos":"vt.","meaning":"颁布；制定法律；扮演；发生"},
+          {"word":"endanger","phonetic":"[ɪn'deɪn(d)ʒə]","pos":"vt.","meaning":"危及；使遭到危险"},
+          {"word":"encourage","phonetic":"[ɪn'kʌrɪdʒ]","pos":"vt.","meaning":"鼓励，怂恿；激励；支持"},
+          {"word":"enlighten","phonetic":"[ɪn'laɪt(ə)n]","pos":"vt.","meaning":"启发，启蒙；教导，开导"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "ex-",
+        "logic": "1. 出，出去；2. 前面的，前任的",
+        "items": [
+          {"word":"excess","phonetic":"[ɪk'ses]","pos":"n./adj.","meaning":"超过，超额；过度，过量；额外的，附加的"},
+          {"word":"exceed","phonetic":"[ɪk'siːd]","pos":"vt.","meaning":"超过；胜过"},
+          {"word":"exclude","phonetic":"[ɪk'skluːd]","pos":"vt.","meaning":"排除；排斥；逐出"},
+          {"word":"expose","phonetic":"[ɪk'spəʊz]","pos":"vt.","meaning":"揭露，揭发；使曝光"},
+          {"word":"exhibition","phonetic":"[eksɪ'bɪʃən]","pos":"n.","meaning":"展览，显示；展览会；展览品"},
+          {"word":"ex-wife","phonetic":"","pos":"n.","meaning":"前妻"}
+        ]
+      }
+    ]
+  },
+   {
+    "id": "lesson3",
+    "title": "Lesson 3 · 常见前缀 (不/向内/相互/错误/预先/向前/贯穿/重新/副手/变换)",
+    "groups": [
+      {
+        "type": "prefix",
+        "affix": "im-/in-",
+        "logic": "1. 表示“不，无，非”；2. 表示“向内；进入”",
+        "items": [
+          {"word":"independent","phonetic":"[,ɪndɪ'pendənt]","pos":"adj./n.","meaning":"独立的；单独的；独立自主者；无党派者"},
+          {"word":"inconvenience","phonetic":"[ɪnkən'viːnɪəns]","pos":"n.","meaning":"不便；麻烦"},
+          {"word":"immoral","phonetic":"[ɪ'mɔrəl]","pos":"adj.","meaning":"不道德的；邪恶的"},
+          {"word":"indifferent","phonetic":"[ɪn'dɪfrənt]","pos":"adj.","meaning":"漠不关心的；无关紧要的"},
+          {"word":"impressive","phonetic":"[ɪm‘prɛsɪv]","pos":"adj.","meaning":"感人的；令人钦佩的；给人以深刻印象的"},
+          {"word":"impression","phonetic":"[ɪm'preʃ(ə)n]","pos":"n.","meaning":"印象；效果，影响"},
+          {"word":"infect","phonetic":"[ɪn'fekt]","pos":"vt.","meaning":"感染，传染"},
+          {"word":"infer","phonetic":"[ɪn'fɜː]","pos":"vt./vi.","meaning":"推断；推论"},
+          {"word":"influence","phonetic":"['ɪnflʊəns]","pos":"n./vt.","meaning":"影响；势力；有影响的人或事；影响；改变"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "inter-",
+        "logic": "表示“在…之间，相互”",
+        "items": [
+          {"word":"international","phonetic":"[ɪntə'næʃənəl]","pos":"adj.","meaning":"国际的"},
+          {"word":"interpersonal","phonetic":"[ɪntə'pɜːsənəl]","pos":"adj.","meaning":"人际的；人与人之间的"},
+          {"word":"interaction","phonetic":"[,ɪntə‘rækʃən]","pos":"n.","meaning":"相互作用；交互作用"},
+          {"word":"intersection","phonetic":"[,ɪntɚ‘sɛkʃən]","pos":"n.","meaning":"交叉；十字路口；交集；交叉点"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "mis-",
+        "logic": "表示“错误，坏”",
+        "items": [
+          {"word":"mislead","phonetic":"[mɪs'liːd]","pos":"vt.","meaning":"误导；带错"},
+          {"word":"misunderstanding","phonetic":"[,mɪsʌndə'stændɪŋ]","pos":"n.","meaning":"误解；误会；不和"},
+          {"word":"misfortune","phonetic":"[‘mɪs’fɔrtʃən]","pos":"n.","meaning":"不幸；灾祸，灾难"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "pre-",
+        "logic": "表示“…前的，预先”",
+        "items": [
+          {"word":"preview","phonetic":"['priːvjuː]","pos":"n./vt.","meaning":"预览；试映；预演"},
+          {"word":"predict","phonetic":"[prɪ'dɪkt]","pos":"vt.","meaning":"预报，预言；预知"},
+          {"word":"preserve","phonetic":"[prɪ‘zɝv]","pos":"vt./n.","meaning":"保存；保护；维持；保护区；禁猎地"},
+          {"word":"previous","phonetic":"['priːvɪəs]","pos":"adj./adv.","meaning":"以前的；早先的；过早的；在先；在…以前"},
+          {"word":"prejudice","phonetic":"['predʒʊdɪs]","pos":"n./vt.","meaning":"偏见；侵害；损害；使有偏见"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "pro-",
+        "logic": "1. 表示向前，在前；2. 表示“很多…”",
+        "items": [
+          {"word":"process","phonetic":"[‘prəʊses]","pos":"vt./n.","meaning":"处理；加工；过程，进行；方法，步骤"},
+          {"word":"produce","phonetic":"[prə'djuːs]","pos":"vt./n.","meaning":"生产；引起；创作；农作物，产品"},
+          {"word":"prohibit","phonetic":"[prə(ʊ)‘hɪbɪt]","pos":"vt.","meaning":"阻止，禁止"},
+          {"word":"project","phonetic":"[‘prɒdʒekt]","pos":"n./v.","meaning":"工程；计划；事业；设计；计划"},
+          {"word":"proficient","phonetic":"[prə‘fɪʃənt]","pos":"adj./n.","meaning":"熟练的，精通的；精通；专家，能手"},
+          {"word":"proportion","phonetic":"[prə‘pɔːʃən]","pos":"n./vt.","meaning":"比例；部分；使成比例；使均衡"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "per-",
+        "logic": "表示“贯穿，自始至终”",
+        "items": [
+          {"word":"perceive","phonetic":"[pə'siːv]","pos":"vt./vi.","meaning":"察觉，感觉；感到，感知"},
+          {"word":"permit","phonetic":"[pə'mɪt]","pos":"v./n.","meaning":"许可；允许；许可证，执照"},
+          {"word":"permission","phonetic":"[pə'mɪʃən]","pos":"n.","meaning":"允许，许可"},
+          {"word":"perspective","phonetic":"[pə'spektɪv]","pos":"n./adj.","meaning":"观点；远景；透视图；透视的"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "re-",
+        "logic": "1. 表示向后，相反，不；2. 表示一再，重新",
+        "items": [
+          {"word":"reflect","phonetic":"[rɪ'flekt]","pos":"vt./vi.","meaning":"反映；反射；映现；深思"},
+          {"word":"reduction","phonetic":"[rɪ'dʌkʃ(ə)n]","pos":"n.","meaning":"减少；下降；缩小"},
+          {"word":"reserve","phonetic":"[rɪ'zɜːv]","pos":"n./vt./vi.","meaning":"储备，储存；自然保护区；储备；保留；预订"},
+          {"word":"remote","phonetic":"[rɪ'məʊt]","pos":"adj./n.","meaning":"遥远的；偏僻的；疏远的；远程"},
+          {"word":"recommend","phonetic":"[rekə’mend]","pos":"vt./vi.","meaning":"推荐；介绍；建议"},
+          {"word":"reveal","phonetic":"[rɪ'viːl]","pos":"vt.","meaning":"显示；透露；揭露；泄露；揭露；暴露"},
+          {"word":"reproduce","phonetic":"[riːprə'djuːs]","pos":"vt./vi.","meaning":"复制；再生；复制；繁殖"},
+          {"word":"respectively","phonetic":"[rɪ'spektɪvlɪ]","pos":"adv.","meaning":"分别地；各自地；独自地"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "sub-",
+        "logic": "表示在下面，次一等，副手",
+        "items": [
+          {"word":"submit","phonetic":"[səb'mɪt]","pos":"vt./vi.","meaning":"使服从；主张；呈递；提交；服从"},
+          {"word":"submissive","phonetic":"[səb'mɪsɪv]","pos":"adj.","meaning":"顺从的；服从的；柔顺的"},
+          {"word":"substance","phonetic":"['sʌbst(ə)ns]","pos":"n.","meaning":"物质；实质；资产；主旨"},
+          {"word":"substantial","phonetic":"[səb'stænʃ(ə)l]","pos":"adj./n.","meaning":"大量的；实质的；本质；重要材料"},
+          {"word":"suburb","phonetic":"[‘sʌbɜːb]","pos":"n.","meaning":"郊区；边缘"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "sus-",
+        "logic": "表示在…下面",
+        "items": [
+          {"word":"suspect","phonetic":"[sə‘spekt]","pos":"n./adj./v.","meaning":"嫌疑犯；可疑的；不可信的；怀疑；猜想"},
+          {"word":"suspend","phonetic":"[sə'spend]","pos":"vt.","meaning":"延缓；推迟；使暂停；使悬浮"},
+          {"word":"sustain","phonetic":"[sə'steɪn]","pos":"vt.","meaning":"维持；支撑；承担；忍受"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "trans-",
+        "logic": "表示变换，改变，转移",
+        "items": [
+          {"word":"transport","phonetic":"[træn'spɔːt]","pos":"n./vt.","meaning":"运输"},
+          {"word":"transplant","phonetic":"[træns'plɑ:nt]","pos":"v./n.","meaning":"移植；迁移；移植器官"},
+          {"word":"transform","phonetic":"[træns'fɔːm]","pos":"vt./vi.","meaning":"改变，使…变形；转换；变换，改变；转化"},
+          {"word":"transfer","phonetic":"[træns'fɜː]","pos":"n./vi./vt.","meaning":"转让；转移；传递；使转移"}
+        ]
+      },
+      {
+        "type": "prefix",
+        "affix": "un-",
+        "logic": "表示“不，无，非，没有”",
+        "items": [
+          {"word":"unexpected","phonetic":"[ʌnɪk'spektɪd]","pos":"adj.","meaning":"意外的，想不到的"},
+          {"word":"unbelievable","phonetic":"[ʌnbɪ'liːvəbəl]","pos":"adj.","meaning":"难以置信的；不可信的"},
+          {"word":"unfortunately","phonetic":"[ʌnˈfɔːtʃənətli]","pos":"adv.","meaning":"不幸地"},
+          {"word":"uncover","phonetic":"[ʌn'kʌvə]","pos":"v.","meaning":"发现；揭开"}
+        ]
+      }
+    ]
+  },
     {
       "id": "lesson4",
       "title": "Lesson 4 · 词根 spec (看)",
