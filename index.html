@@ -235,7 +235,11 @@
 
                 const flatWords = computed(() => flattenWords(currentLesson.value));
                 const currentWord = computed(() => (flatWords.value && flatWords.value[studyIdx.value]) ? flatWords.value[studyIdx.value] : {});
-                const currentLessonId = computed(() => currentLesson.value?.id || '1');
+                const currentLessonId = computed(() => {
+                    // 如果在全课综合测试，可以固定为一个特殊 ID 或默认 ID
+                    if (view.value === 'quiz' && quizWords.value.length > 20) return '5'; 
+                    return currentLesson.value?.id || '1';
+                });
 
                 const goHome = () => { view.value = 'home'; };
 
@@ -259,7 +263,13 @@
                 };
 
                 const startLessonQuiz = (lesson) => {
+                    // 1. 关键：将当前课程存入变量，以便 HTML 模板中的 :class="'theme-' + currentLessonId" 生效
+                    currentLesson.value = lesson; 
+                    
+                    // 2. 提取该课单词并随机乱序
                     quizWords.value = flattenWords(lesson).sort(() => Math.random() - 0.5);
+                    
+                    // 3. 进入测试流程
                     initQuizSession();
                 };
 
