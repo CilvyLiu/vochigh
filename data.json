@@ -1,135 +1,232 @@
 {
-  "id": "lesson1",
-  "title": "Lesson 1 · 常见后缀（名词 / 形容词）",
-  "groups": [
-    {
-      "type": "suffix",
-      "affix": "-er / -or",
-      "logic": "表示“……的人”",
-      "items": [
-        {"word":"composer","phonetic":"kəm'pəʊzə","pos":"n.","meaning":"作曲家；作家，著作者"},
-        {"word":"consumer","phonetic":"kənˈsjuːmə(r)","pos":"n.","meaning":"消费者；用户，顾客"},
-        {"word":"receiver","phonetic":"rɪ‘siːvə","pos":"n.","meaning":"接收器；接受者"},
-        {"word":"pioneer","phonetic":"paɪə'nɪə","pos":"n./vt.","meaning":"先锋；拓荒者；开辟；倡导；提倡"},
-        {"word":"volunteer","phonetic":",vɒlən'tɪə","pos":"n./adj.","meaning":"志愿者；志愿的"},
-        {"word":"character","phonetic":"‘kærəktə","pos":"n.","meaning":"性格，品质；特性；角色"},
-        {"word":"sailor","phonetic":"ˈseɪlə(r)","pos":"n.","meaning":"水手，海员"},
-        {"word":"ancestor","phonetic":"‘ænsestə","pos":"n.","meaning":"始祖，祖先；被继承人"}
+  "course_id": "full_stack_vocab_001",
+  "lessons": [
+   {
+      "id": "lesson1",
+      "title": "Lesson 1 · 常见词缀 (人/性质/行为/学科/能力/形容词)",
+      "groups": [
+        {
+          "type": "suffix",
+          "affix": "-er/-or",
+          "logic": "表示“……的人”",
+          "items": [
+            {"word":"composer","phonetic":"[kəm'pəʊzə]","pos":"n.","meaning":"作曲家；作家，著作者"},
+            {"word":"consumer","phonetic":"[kənˈsju:mə(r)]","pos":"n.","meaning":"消费者；用户，顾客"},
+            {"word":"receiver","phonetic":"[rɪ‘siːvə]","pos":"n.","meaning":"接收器；接受者"},
+            {"word":"pioneer","phonetic":"[paɪə'nɪə]","pos":"n./vt.","meaning":"先锋；拓荒者；开辟；倡导；提倡"},
+            {"word":"volunteer","phonetic":"[,vɒlən'tɪə]","pos":"n./adj.","meaning":"志愿者；志愿的"},
+            {"word":"character","phonetic":"[‘kærəktə]","pos":"n.","meaning":"性格，品质；特性；角色"},
+            {"word":"sailor","phonetic":"[ˈseɪlə(r)]","pos":"n.","meaning":"水手，海员"},
+            {"word":"ancestor","phonetic":"[‘ænsestə]","pos":"n.","meaning":"始祖，祖先；被继承人"}
+          ]
+        },
+        {
+          "type": "suffix",
+          "affix": "-ist",
+          "logic": "表示“从事…研究者，信仰…主义者”",
+          "items": [
+            {"word":"dentist","phonetic":"['dentɪst]","pos":"n.","meaning":"牙科医生"},
+            {"word":"stylist","phonetic":"['staɪlɪst]","pos":"n.","meaning":"设计师；文体学家"},
+            {"word":"scientist","phonetic":"['saɪəntɪst]","pos":"n.","meaning":"科学家"},
+            {"word":"journalist","phonetic":"[ˈdʒɜ:nəlɪst]","pos":"n.","meaning":"新闻工作者"},
+            {"word":"linguist","phonetic":"['lɪŋgwɪst]","pos":"n.","meaning":"语言学家"}
+          ]
+        },
+        {
+          "type": "suffix",
+          "affix": "-bility",
+          "logic": "表示“动作，性质，状态”",
+          "items": [
+            {"word":"ability","phonetic":"[ə‘bɪlɪtɪ]","pos":"n.","meaning":"能力，能耐；才能"},
+            {"word":"capability","phonetic":"[,kepə‘bɪləti]","pos":"n.","meaning":"才能，能力；性能"},
+            {"word":"flexibility","phonetic":"[,fleksɪ‘bɪtɪ]","pos":"n.","meaning":"灵活性；弹性；适应性"},
+            {"word":"stability","phonetic":"[stə‘bɪləti]","pos":"n.","meaning":"稳定性；坚定，恒心"},
+            {"word":"possibility","phonetic":"[,pɑsə'bɪləti]","pos":"n.","meaning":"可能性；可能发生的事物"},
+            {"word":"responsibility","phonetic":"[rɪ,spɑnsə‘bɪləti]","pos":"n.","meaning":"责任，职责；义务"}
+          ]
+        },
+        {
+          "type": "suffix",
+          "affix": "-ion/-sion/-tion/-ation/-ition",
+          "logic": "表示“行为的过程，结果，状况”",
+          "items": [
+            {"word":"aggression","phonetic":"[ə'ɡrɛʃən]","pos":"n.","meaning":"侵略；进攻；侵犯；侵害"},
+            {"word":"congratulation","phonetic":"[kənˌgrætʃuˈleɪʃn]","pos":"n.","meaning":"祝贺；贺辞"},
+            {"word":"generation","phonetic":"[‘dʒɛnə’reʃən]","pos":"n.","meaning":"一代；产生；一代人"},
+            {"word":"navigation","phonetic":"[‘nævə’geʃən]","pos":"n.","meaning":"航行；航海"},
+            {"word":"construction","phonetic":"[kən'strʌkʃən]","pos":"n.","meaning":"建设；建筑物"}
+          ]
+        },
+        {
+          "type": "suffix",
+          "affix": "-ism",
+          "logic": "表示“制度，主义，学说，信仰，行为”",
+          "items": [
+            {"word":"journalism","phonetic":"[‘dʒɝnl’ɪzəm]","pos":"n.","meaning":"新闻业，新闻工作"},
+            {"word":"capitalism","phonetic":"['kæpɪtəlɪzəm]","pos":"n.","meaning":"资本主义"},
+            {"word":"socialism","phonetic":"[‘səʊʃəlɪzəm]","pos":"n.","meaning":"社会主义"},
+            {"word":"organism","phonetic":"[ˈɔ:gənɪzəm]","pos":"n.","meaning":"有机体；生物体"},
+            {"word":"organic","phonetic":"[ɔː'gænɪk]","pos":"adj.","meaning":"有机的；器官的"}
+          ]
+        },
+        {
+          "type": "suffix",
+          "affix": "-ology/-logy",
+          "logic": "表示“…学，…论”",
+          "items": [
+            {"word":"biology","phonetic":"[baɪ'ɒlədʒɪ]","pos":"n.","meaning":"生物；生物学"},
+            {"word":"geology","phonetic":"[dʒɪ'ɒlədʒɪ]","pos":"n.","meaning":"地质学；地质情况"},
+            {"word":"zoology","phonetic":"[zuː'ɒlədʒɪ]","pos":"n.","meaning":"动物学；动物区系"},
+            {"word":"technology","phonetic":"[tekˈnɒlədʒi]","pos":"n.","meaning":"技术；工艺"},
+            {"word":"ecology","phonetic":"[ɪ‘kɒlədʒɪ]","pos":"n.","meaning":"生态学；社会生态学"},
+            {"word":"psychology","phonetic":"[saɪ'kɒlədʒɪ]","pos":"n.","meaning":"心理学；心理状态"}
+          ]
+        },
+        {
+          "type": "suffix",
+          "affix": "-ment",
+          "logic": "表示名词后缀",
+          "items": [
+            {"word":"announcement","phonetic":"[ə‘naʊnsmənt]","pos":"n.","meaning":"公告；宣告；发表；通告"},
+            {"word":"apartment","phonetic":"[ə‘pɑrtmənt]","pos":"n.","meaning":"公寓；房间"},
+            {"word":"department","phonetic":"[dɪ‘pɑrtmənt]","pos":"n.","meaning":"部；部门；系；科；局"},
+            {"word":"appointment","phonetic":"[ə‘pɔɪntmənt]","pos":"n.","meaning":"任命；约定；任命的职位"},
+            {"word":"argument","phonetic":"[‘ɑːgjʊm(ə)nt]","pos":"n.","meaning":"论证；论据；争吵"},
+            {"word":"assignment","phonetic":"[ə‘saɪnm(ə)nt]","pos":"n.","meaning":"分配；任务；作业"}
+          ]
+        },
+        {
+          "type": "suffix",
+          "affix": "-able",
+          "logic": "表示“能力”",
+          "items": [
+            {"word":"detectable","phonetic":"[dɪ‘tɛktəbl]","pos":"adj.","meaning":"可检测的；可发觉的"},
+            {"word":"reliable","phonetic":"[rɪ‘laɪəb(ə)l]","pos":"adj.","meaning":"可靠的；可信赖的"},
+            {"word":"remarkable","phonetic":"[rɪ‘mɑːkəb(ə)l]","pos":"adj.","meaning":"卓越的；非凡的；值得注意的"},
+            {"word":"comparable","phonetic":"[‘kɒmp(ə)rəb(ə)l]","pos":"adj.","meaning":"可比较的；比得上的"},
+            {"word":"available","phonetic":"[ə‘veɪləb(ə)l]","pos":"adj.","meaning":"可获得的；可购得的；可找到的；有空的"},
+            {"word":"portable","phonetic":"[‘pɔːtəb(ə)l]","pos":"adj.","meaning":"手提的，便携式的；轻便的"}
+          ]
+        },
+        {
+          "type": "suffix",
+          "affix": "-ive",
+          "logic": "形容词后缀",
+          "items": [
+            {"word":"collective","phonetic":"[kə‘lɛktɪv]","pos":"adj.","meaning":"集体的；共同的；集合的；集体主义的"},
+            {"word":"inactive","phonetic":"[ɪn‘æktɪv]","pos":"adj.","meaning":"不活跃的；不活动的"},
+            {"word":"selective","phonetic":"[sɪ‘lektɪv]","pos":"adj.","meaning":"选择性的；讲究的"},
+            {"word":"comprehensive","phonetic":"[kɒmprɪ‘hensɪv]","pos":"adj.","meaning":"综合的；广泛的；有理解力的"},
+            {"word":"successive","phonetic":"[sək‘sesɪv]","pos":"adj.","meaning":"连续的；继承的；依次的"}
+          ]
+        },
+        {
+          "type": "suffix",
+          "affix": "-ent",
+          "logic": "形容词后缀",
+          "items": [
+            {"word":"patient","phonetic":"[‘peɪʃ(ə)nt]","pos":"adj./n.","meaning":"有耐性的，能容忍的；病人；患者"},
+            {"word":"current","phonetic":"[‘kʌr(ə)nt]","pos":"adj./n.","meaning":"现在的；流通的，通用的；（水，气，电）流"},
+            {"word":"convenient","phonetic":"[kən‘viːnɪənt]","pos":"adj.","meaning":"方便的"},
+            {"word":"urgent","phonetic":"[‘ɜːdʒ(ə)nt]","pos":"adj.","meaning":"紧急的；急迫的"},
+            {"word":"sufficient","phonetic":"[sə‘fɪʃ(ə)nt]","pos":"adj.","meaning":"足够的；充分的"},
+            {"word":"intelligent","phonetic":"[ɪn‘telɪdʒ(ə)nt]","pos":"adj.","meaning":"智能的；聪明的；理解力强的"},
+            {"word":"fluent","phonetic":"[‘fluːənt]","pos":"adj.","meaning":"流畅的，流利的；液态的"}
+          ]
+        }
       ]
     },
     {
-      "type": "suffix",
-      "affix": "-ist",
-      "logic": "表示“从事……研究者，信仰……主义者”",
-      "items": [
-        {"word":"dentist","phonetic":"'dentɪst","pos":"n.","meaning":"牙科医生"},
-        {"word":"stylist","phonetic":"'staɪlɪst","pos":"n.","meaning":"设计师；文体学家"},
-        {"word":"scientist","phonetic":"'saɪəntɪst","pos":"n.","meaning":"科学家"},
-        {"word":"journalist","phonetic":"ˈdʒɜːnəlɪst","pos":"n.","meaning":"新闻工作者"},
-        {"word":"linguist","phonetic":"'lɪŋgwɪst","pos":"n.","meaning":"语言学家"}
+      "id": "lesson3",
+      "title": "Lesson 3 · 常见的11个前缀",
+      "groups": [
+        {
+          "type": "prefix",
+          "affix": "im-/in-",
+          "logic": "表示“不，无，非；向内，进入”",
+          "items": [
+            {"word":"independent","phonetic":"[,ɪndɪ'pendənt]","pos":"adj./n.","meaning":"独立的；单独的；独立自主者；无党派者"},
+            {"word":"inconvenience","phonetic":"[ɪnkən'viːnɪəns]","pos":"n.","meaning":"不便；麻烦"},
+            {"word":"immoral","phonetic":"[ɪ'mɔrəl]","pos":"adj.","meaning":"不道德的；邪恶的"},
+            {"word":"indifferent","phonetic":"[ɪn'dɪfrənt]","pos":"adj.","meaning":"漠不关心的；无关紧要的"},
+            {"word":"impressive","phonetic":"[ɪm‘prɛsɪv]","pos":"adj.","meaning":"感人的；令人钦佩的；给人以深刻印象的"},
+            {"word":"impression","phonetic":"[ɪm'preʃ(ə)n]","pos":"n.","meaning":"印象；效果，影响"},
+            {"word":"infect","phonetic":"[ɪn'fekt]","pos":"vt.","meaning":"感染，传染"},
+            {"word":"infer","phonetic":"[ɪn'fɜː]","pos":"vt./vi.","meaning":"推断；推论；作出推论"},
+            {"word":"influence","phonetic":"['ɪnflʊəns]","pos":"n./vt.","meaning":"影响；势力；有影响的人或事；影响；改变"}
+          ]
+        },
+        {
+          "type": "prefix",
+          "affix": "inter-",
+          "logic": "表示“在…之间，相互”",
+          "items": [
+            {"word":"international","phonetic":"[ɪntə'næʃənəl]","pos":"adj.","meaning":"国际的"},
+            {"word":"interpersonal","phonetic":"[ɪntə'pɜːsənəl]","pos":"adj.","meaning":"人际的；人与人之间的"},
+            {"word":"interaction","phonetic":"[,ɪntə‘rækʃən]","pos":"n.","meaning":"相互作用；交互作用"},
+            {"word":"intersection","phonetic":"[,ɪntɚ‘sɛkʃən]","pos":"n.","meaning":"交叉；十字路口；交集；交叉点"}
+          ]
+        }
       ]
     },
     {
-      "type": "suffix",
-      "affix": "-bility",
-      "logic": "表示“动作、性质、状态”",
-      "items": [
-        {"word":"ability","phonetic":"ə‘bɪlɪtɪ","pos":"n.","meaning":"能力，能耐；才能"},
-        {"word":"capability","phonetic":",kepə‘bɪləti","pos":"n.","meaning":"才能，能力；性能"},
-        {"word":"flexibility","phonetic":",fleksɪ‘bɪlɪtɪ","pos":"n.","meaning":"灵活性；弹性；适应性"},
-        {"word":"stability","phonetic":"stə‘bɪləti","pos":"n.","meaning":"稳定性；坚定，恒心"},
-        {"word":"possibility","phonetic":",pɑsə'bɪləti","pos":"n.","meaning":"可能性；可能发生的事物"},
-        {"word":"responsibility","phonetic":"rɪ,spɑnsə‘bɪləti","pos":"n.","meaning":"责任，职责；义务"}
+      "id": "lesson4",
+      "title": "Lesson 4 · 词根 spec (看)",
+      "groups": [
+        {
+          "type": "root",
+          "affix": "spec",
+          "logic": "表示“看”",
+          "items": [
+            {"word":"inspect","phonetic":"[ɪn'spekt]","pos":"vt.","meaning":"检查；视察"},
+            {"word":"spectator","phonetic":"[ˈspektətər]","pos":"n.","meaning":"观众；旁观者"}
+          ]
+        }
       ]
     },
     {
-      "type": "suffix",
-      "affix": "-ion / -sion / -tion / -ation / -ition",
-      "logic": "表示“行为的过程、结果、状况”",
-      "items": [
-        {"word":"aggression","phonetic":"ə'ɡrɛʃən","pos":"n.","meaning":"侵略；进攻；侵犯；侵害"},
-        {"word":"congratulation","phonetic":"kənˌgrætʃuˈleɪʃn","pos":"n.","meaning":"祝贺；贺辞"},
-        {"word":"generation","phonetic":"‘dʒɛnə’reʃən","pos":"n.","meaning":"一代；产生；一代人"},
-        {"word":"navigation","phonetic":"‘nævə’geʃən","pos":"n.","meaning":"航行；航海"},
-        {"word":"construction","phonetic":"kən'strʌkʃən","pos":"n.","meaning":"建设；建筑物"}
-      ]
-    },
-    {
-      "type": "suffix",
-      "affix": "-ism",
-      "logic": "表示“制度、主义、学说、信仰、行为”",
-      "items": [
-        {"word":"journalism","phonetic":"‘dʒɝnl’ɪzəm","pos":"n.","meaning":"新闻业，新闻工作"},
-        {"word":"capitalism","phonetic":"'kæpɪtəlɪzəm","pos":"n.","meaning":"资本主义"},
-        {"word":"socialism","phonetic":"‘səʊʃəlɪzəm","pos":"n.","meaning":"社会主义"},
-        {"word":"organism","phonetic":"ˈɔːgənɪzəm","pos":"n.","meaning":"有机体；生物体"},
-        {"word":"organic","phonetic":"ɔː'gænɪk","pos":"adj.","meaning":"有机的；器官的"}
-      ]
-    },
-    {
-      "type": "suffix",
-      "affix": "-ology / -logy",
-      "logic": "表示“……学，……论”",
-      "items": [
-        {"word":"biology","phonetic":"baɪ'ɒlədʒɪ","pos":"n.","meaning":"生物学"},
-        {"word":"geology","phonetic":"dʒɪ'ɒlədʒɪ","pos":"n.","meaning":"地质学；地质情况"},
-        {"word":"zoology","phonetic":"zuː'ɒlədʒɪ","pos":"n.","meaning":"动物学；动物区系"},
-        {"word":"technology","phonetic":"tekˈnɒlədʒi","pos":"n.","meaning":"技术；工艺"},
-        {"word":"ecology","phonetic":"ɪ‘kɒlədʒɪ","pos":"n.","meaning":"生态学；社会生态学"},
-        {"word":"psychology","phonetic":"saɪ'kɒlədʒɪ","pos":"n.","meaning":"心理学；心理状态"}
-      ]
-    },
-    {
-      "type": "suffix",
-      "affix": "-ment",
-      "logic": "名词后缀",
-      "items": [
-        {"word":"announcement","phonetic":"ə‘naʊnsmənt","pos":"n.","meaning":"公告；宣告；发表；通告"},
-        {"word":"apartment","phonetic":"ə‘pɑrtmənt","pos":"n.","meaning":"公寓；房间"},
-        {"word":"department","phonetic":"dɪ‘pɑrtmənt","pos":"n.","meaning":"部；部门；系；科；局"},
-        {"word":"appointment","phonetic":"ə‘pɔɪntmənt","pos":"n.","meaning":"任命；约定；任命的职位"},
-        {"word":"argument","phonetic":"‘ɑːgjʊm(ə)nt","pos":"n.","meaning":"论证；论据；争吵"},
-        {"word":"assignment","phonetic":"ə‘saɪnm(ə)nt","pos":"n.","meaning":"分配；任务；作业"}
-      ]
-    },
-    {
-      "type": "suffix",
-      "affix": "-able",
-      "logic": "表示“有……能力的”",
-      "items": [
-        {"word":"detectable","phonetic":"dɪ‘tɛktəbl","pos":"adj.","meaning":"可检测的；可发觉的"},
-        {"word":"reliable","phonetic":"rɪ‘laɪəb(ə)l","pos":"adj.","meaning":"可靠的；可信赖的"},
-        {"word":"remarkable","phonetic":"rɪ‘mɑːkəb(ə)l","pos":"adj.","meaning":"卓越的；非凡的；值得注意的"},
-        {"word":"comparable","phonetic":"‘kɒmp(ə)rəb(ə)l","pos":"adj.","meaning":"可比较的；比得上的"},
-        {"word":"available","phonetic":"ə‘veɪləb(ə)l","pos":"adj.","meaning":"可获得的；可购得的；有空的"},
-        {"word":"portable","phonetic":"‘pɔːtəb(ə)l","pos":"adj.","meaning":"手提的；便携式的"}
-      ]
-    },
-    {
-      "type": "suffix",
-      "affix": "-ive",
-      "logic": "形容词后缀",
-      "items": [
-        {"word":"collective","phonetic":"kə‘lɛktɪv","pos":"adj.","meaning":"集体的；共同的"},
-        {"word":"inactive","phonetic":"ɪn‘æktɪv","pos":"adj.","meaning":"不活跃的"},
-        {"word":"selective","phonetic":"sɪ‘lektɪv","pos":"adj.","meaning":"选择性的；讲究的"},
-        {"word":"comprehensive","phonetic":"kɒmprɪ‘hensɪv","pos":"adj.","meaning":"综合的；广泛的"},
-        {"word":"successive","phonetic":"sək‘sesɪv","pos":"adj.","meaning":"连续的；依次的"}
-      ]
-    },
-    {
-      "type": "suffix",
-      "affix": "-ent",
-      "logic": "形容词后缀",
-      "items": [
-        {"word":"patient","phonetic":"‘peɪʃ(ə)nt","pos":"adj./n.","meaning":"有耐性的；病人"},
-        {"word":"current","phonetic":"‘kʌr(ə)nt","pos":"adj./n.","meaning":"现在的；电流"},
-        {"word":"convenient","phonetic":"kən‘viːnɪənt","pos":"adj.","meaning":"方便的"},
-        {"word":"urgent","phonetic":"‘ɜːdʒ(ə)nt","pos":"adj.","meaning":"紧急的"},
-        {"word":"sufficient","phonetic":"sə‘fɪʃ(ə)nt","pos":"adj.","meaning":"足够的"},
-        {"word":"intelligent","phonetic":"ɪn‘telɪdʒ(ə)nt","pos":"adj.","meaning":"聪明的；有理解力的"},
-        {"word":"fluent","phonetic":"‘fluːənt","pos":"adj.","meaning":"流利的；液态的"}
+      "id": "lesson5",
+      "title": "Lesson 5 · 综合复习",
+      "groups": [
+        {
+          "type": "prefix",
+          "affix": "per-/re-/sub-/sus-/trans-/un-",
+          "logic": "贯穿、重复、下方、转移、否定",
+          "items": [
+            {"word":"perceive","phonetic":"[pə'siːv]","pos":"vt./vi.","meaning":"察觉，感觉；感到，感知"},
+            {"word":"permit","phonetic":"[pə'mɪt]","pos":"v./n.","meaning":"许可；允许；许可证"},
+            {"word":"permission","phonetic":"[pə'mɪʃən]","pos":"n.","meaning":"允许，许可"},
+            {"word":"perspective","phonetic":"[pə'spektɪv]","pos":"n./adj.","meaning":"观点；远景；透视图；透视的"},
+            {"word":"reflect","phonetic":"[rɪ'flekt]","pos":"vt./vi.","meaning":"反映；反射；映现；深思"},
+            {"word":"reduction","phonetic":"[rɪ'dʌkʃ(ə)n]","pos":"n.","meaning":"减少；下降；缩小"},
+            {"word":"reserve","phonetic":"[rɪ'zɜːv]","pos":"n./vt./vi.","meaning":"储备，储存；自然保护区；储备；保留；预订"},
+            {"word":"remote","phonetic":"[rɪ'məʊt]","pos":"adj./n.","meaning":"遥远的；偏僻的；疏远的；远程"},
+            {"word":"recommend","phonetic":"[rekə’mend]","pos":"vt./vi.","meaning":"推荐，介绍；建议"},
+            {"word":"reveal","phonetic":"[rɪ'viːl]","pos":"vt./n.","meaning":"显示；透露；揭露；泄露；揭露；暴露"},
+            {"word":"reproduce","phonetic":"[riːprə'djuːs]","pos":"vt./vi.","meaning":"复制；再生；复制；繁殖"},
+            {"word":"respectively","phonetic":"[rɪ'spektɪvlɪ]","pos":"adv.","meaning":"分别地；各自地；独自地"},
+            {"word":"submit","phonetic":"[səb'mɪt]","pos":"vt./vi.","meaning":"使服从；主张；呈递；提交；服从"},
+            {"word":"submissive","phonetic":"[səb'mɪsɪv]","pos":"adj.","meaning":"顺从的；服从的；柔顺的"},
+            {"word":"substance","phonetic":"['sʌbst(ə)ns]","pos":"n.","meaning":"物质；实质；资产；主旨"},
+            {"word":"substantial","phonetic":"[səb'stænʃ(ə)l]","pos":"adj./n.","meaning":"大量的；实质的；本质；重要材料"},
+            {"word":"suburb","phonetic":"[‘sʌbɜːb]","pos":"n.","meaning":"郊区；边缘"},
+            {"word":"suspect","phonetic":"[sə‘spekt]","pos":"n./adj./v.","meaning":"嫌疑犯；可疑的；不可信的；怀疑；猜想"},
+            {"word":"suspend","phonetic":"[sə'spend]","pos":"vt.","meaning":"延缓，推迟；使暂停；使悬浮"},
+            {"word":"sustain","phonetic":"[sə'steɪn]","pos":"vt.","meaning":"维持；支撑，承担；忍受"},
+            {"word":"transport","phonetic":"[træn'spɔːt]","pos":"n./vt.","meaning":"运输"},
+            {"word":"transplant","phonetic":"[træns'plɑ:nt]","pos":"v./n.","meaning":"移植；迁移；移植器官"},
+            {"word":"transform","phonetic":"[træns'fɔːm]","pos":"vt./vi.","meaning":"改变，使…变形；转换；变换，改变；转化"},
+            {"word":"transfer","phonetic":"[træns'fɜː]","pos":"n./vt./vi.","meaning":"转让；转移；传递；使转移"},
+            {"word":"unexpected","phonetic":"[ʌnɪk'spektɪd]","pos":"adj.","meaning":"意外的，想不到的"},
+            {"word":"unbelievable","phonetic":"[ʌnbɪ'liːvəbəl]","pos":"adj.","meaning":"难以置信的；不可信的"},
+            {"word":"unfortunately","phonetic":"[ʌnˈfɔːtʃənətli]","pos":"adv.","meaning":"不幸地"},
+            {"word":"uncover","phonetic":"[ʌn'kʌvə]","pos":"v.","meaning":"发现；揭开"}
+          ]
+        }
       ]
     }
-  ]
+  ],
+  "global_test": {
+    "sections": ["spelling", "phonetic", "logic", "meaning"]
+  }
 }
