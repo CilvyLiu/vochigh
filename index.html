@@ -331,8 +331,15 @@
                     quizScore.value = 0;
                     quizInput.value = '';
                     view.value = 'quiz';
+                    
+                    // --- 修复点：进入测试立刻播放第一题 ---
+                    if (quizWords.value.length > 0) {
+                        // 使用一小段延迟确保 view 切换完成
+                        setTimeout(() => {
+                            playTTS(quizWords.value[0].word);
+                        }, 100);
+                    }
                 };
-
                 const handleQuizSubmit = () => {
                     const current = quizWords.value[quizIdx.value];
                     if (!current) return;
