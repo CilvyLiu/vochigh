@@ -168,16 +168,42 @@
                 const quizScore = ref(0);
                 const isError = ref(false);
 
+                // --- 兼容性 TTS (增强稳定版) ---
                 const playTTS = (text) => {
                     if(!text) return;
+                    
+                    // 强制取消之前的播放任务，防止排队
                     window.speechSynthesis.cancel();
+                
                     const utter = new SpeechSynthesisUtterance(text);
-                    const voices = window.speechSynthesis.getVoices();
-                    const gbVoice = voices.find(v => v.lang.includes('en-GB')) || voices.find(v => v.lang.includes('en'));
-                    if(gbVoice) utter.voice = gbVoice;
-                    utter.lang = 'en-GB';
-                    utter.rate = 0.9;
-                    window.speechSynthesis.speak(utter);
+                    
+                    // 寻找语音库
+                    const getBestVoice = () => {
+                        const voices = window.speechSynthesis.getVoices();
+                        // 1. 优先尝试标准的英式英语 (Nova 的首选)
+                        // 2. 其次尝试任何英语
+                        return voices.find(v => v.lang.includes('en-GB') && v.localService) || 
+                               voices.find(v => v.lang.includes('en-GB')) ||
+                               voices.find(v => v.lang.includes('en'));
+                    };
+                
+                    const runSpeak = () => {
+                        const voice = getBestVoice();
+                        if (voice) utter.voice = voice;
+                        utter.lang = 'en-GB';
+                        utter.rate = 0.85; // 稍微放慢一点点，更清晰
+                        window.speechSynthesis.speak(utter);
+                    };
+                
+                    // 针对 Chrome/Edge 的特殊处理：如果语音库还没加载完，监听加载后再播
+                    if (window.speechSynthesis.getVoices().length === 0) {
+                        window.speechSynthesis.onvoiceschanged = runSpeak;
+                    } else {
+                        runSpeak();
+                    }
+                
+                    // 报错监控：如果还是没声，看控制台
+                    utter.onerror = (e) => console.error("TTS 播放出错:", e);
                 };
 
                 const loadData = async () => {
