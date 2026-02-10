@@ -7,291 +7,228 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --p-color: #6366f1; }
-        /* 5套针对性的主题 CSS */
-        .theme-lesson1 { --p-color: #3b82f6; --bg: #f8fafc; --font: 'Inter', system-ui; }
-        .theme-lesson2 { --p-color: #059669; --bg: #f0fdf4; --font: 'Palatino', serif; }
-        .theme-lesson3 { --p-color: #d946ef; --bg: #fdf2f8; --font: 'Verdana', sans-serif; }
-        .theme-lesson4 { --p-color: #f59e0b; --bg: #fffbeb; --font: 'Trebuchet MS', sans-serif; }
-        .theme-lesson5 { --p-color: #6366f1; --bg: #eef2ff; --font: 'Inter', sans-serif; }
+        :root { --p-color: #6366f1; --bg: #f8fafc; }
+        .theme-lesson1 { --p-color: #3b82f6; --bg: #f8fafc; }
+        .theme-lesson2 { --p-color: #059669; --bg: #f0fdf4; }
+        .theme-lesson3 { --p-color: #d946ef; --bg: #fdf2f8; }
+        .theme-lesson4 { --p-color: #f59e0b; --bg: #fffbeb; }
+        .theme-lesson5 { --p-color: #6366f1; --bg: #eef2ff; }
 
-        body { 
-            background-color: var(--bg); font-family: var(--font); 
-            transition: all 0.5s ease; -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
+        body { background-color: var(--bg); transition: all 0.5s ease; user-select: none; }
         [v-cloak] { display: none; }
-        
-        /* 响应式：平板 vs 手机 */
-        .app-container { max-width: 800px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
-        
-        /* 词根气泡感卡片 */
         .glass-card { 
-            background: rgba(255, 255, 255, 0.85); 
+            background: rgba(255, 255, 255, 0.8); 
             backdrop-filter: blur(20px); 
             border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 2.5rem;
-            box-shadow: 0 20px 50px -12px rgba(0,0,0,0.05);
+            border-radius: 2rem;
         }
-
-        /* 华为/安卓/苹果的底部安全区域适配 */
+        .btn-active:active { transform: scale(0.96); }
         .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
-
-        .btn-active:active { transform: scale(0.96); opacity: 0.9; }
-        
-        /* 词缀专属徽章样式 */
-        .affix-tag { 
-            display: inline-block; padding: 4px 12px; border-radius: 99px;
-            font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
-            background: var(--p-color); color: white; margin-bottom: 1rem;
-        }
     </style>
 </head>
 <body :class="'theme-' + currentLessonId">
-    <div id="app" v-cloak class="app-container">
+    <div id="app" v-cloak class="max-w-2xl mx-auto min-h-screen flex flex-col">
         
         <header class="p-6 flex justify-between items-center">
-            <div @click="view = 'home'" class="cursor-pointer">
-                <h1 class="font-black text-2xl tracking-tighter" :style="{color: 'var(--p-color)'}">ETYMO.</h1>
-                <p class="text-[10px] opacity-40 font-bold uppercase tracking-widest">Universal Learning</p>
+            <div @click="goHome" class="cursor-pointer">
+                <h1 class="font-black text-2xl" :style="{color: 'var(--p-color)'}">ETYMO.</h1>
+                <p class="text-[10px] opacity-40 font-bold uppercase tracking-widest">Nova's Learning System</p>
             </div>
-            <div v-if="view !== 'home'" class="flex gap-2">
-                <button @click="goHome" class="text-xs font-bold px-4 py-2 bg-white rounded-full shadow-sm">EXIT</button>
-            </div>
+            <button v-if="view !== 'home'" @click="goHome" class="text-xs font-bold px-4 py-2 bg-white rounded-full shadow-sm">EXIT</button>
         </header>
 
-        <main class="flex-1 flex flex-col px-6 pb-10">
-            <div v-if="view === 'home'" class="space-y-8 animate__animated animate__fadeIn">
-                <div>
-                    <h2 class="text-4xl font-black leading-tight">Nova,<br><span class="opacity-30">Select your path.</span></h2>
-                </div>
+        <main class="flex-1 px-6 pb-10">
+            <div v-if="view === 'home'" class="space-y-6">
+                <h2 class="text-4xl font-black mb-8">Hello Nova,<br><span class="opacity-30 text-2xl">What's the plan?</span></h2>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div v-for="l in allLessons" :key="l.id" 
-                         @click="startStudy(l)"
-                         class="glass-card p-6 cursor-pointer btn-active hover:shadow-xl transition-all border-l-8"
-                         :style="{borderLeftColor: 'var(--p-color)'}">
-                        <div class="text-[10px] font-bold opacity-30">{{ l.id.toUpperCase() }}</div>
-                        <h3 class="text-xl font-black mt-1">{{ l.title.split('·')[0] }}</h3>
-                        <p class="text-xs opacity-50 mt-2">{{ l.groups.length }} 组词根/词缀</p>
+                <div v-for="l in allLessons" :key="l.id" class="glass-card p-5 mb-4 border-l-8" :style="{borderLeftColor: 'var(--p-color)'}">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-[10px] font-bold opacity-30">{{ l.id.toUpperCase() }}</div>
+                            <h3 class="text-xl font-black">{{ l.title }}</h3>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button @click="startStudy(l)" class="py-3 bg-white/50 rounded-xl text-sm font-bold btn-active border border-black/5">📖 学习内容</button>
+                        <button @click="startLessonQuiz(l)" class="py-3 bg-white/50 rounded-xl text-sm font-bold btn-active border border-black/5">✍️ 单课测试</button>
                     </div>
                 </div>
 
-                <button @click="startTotalQuiz" 
-                        class="w-full py-6 glass-card bg-black text-white rounded-[2rem] font-black text-xl btn-active shadow-2xl">
-                    🚀 跨课程全能大测
+                <button @click="startTotalQuiz" class="w-full py-6 glass-card bg-black text-white font-black text-xl btn-active shadow-2xl mt-4">
+                    🚀 start here
                 </button>
             </div>
 
-            <div v-if="view === 'study'" class="flex-1 flex flex-col justify-center animate__animated animate__fadeInRight">
-                <div class="mb-6">
-                    <div class="flex justify-between items-end mb-2">
-                        <span class="text-sm font-black opacity-20">LEARNING</span>
-                        <span class="text-sm font-mono font-bold" :style="{color: 'var(--p-color)'}">{{ studyIdx + 1 }}/{{ flatWords.length }}</span>
-                    </div>
-                    <div class="h-1 bg-black/5 rounded-full"><div class="h-full bg-current transition-all" :style="{width: ((studyIdx+1)/flatWords.length)*100 + '%', color: 'var(--p-color)'}"></div></div>
+            <div v-if="view === 'study'" class="flex flex-col h-full justify-center">
+                <div class="mb-6 flex justify-between items-end">
+                    <span class="text-xs font-black opacity-20 uppercase">Learning Mode</span>
+                    <span class="font-mono text-sm font-bold" :style="{color: 'var(--p-color)'}">{{ studyIdx + 1 }} / {{ flatWords.length }}</span>
                 </div>
-
-                <div class="glass-card p-10 text-center relative overflow-hidden">
-                    <div class="affix-tag">{{ currentWord.affix }} : {{ currentWord.logic }}</div>
-                    <h3 class="text-5xl sm:text-7xl font-black mb-4 tracking-tighter">{{ currentWord.word }}</h3>
-                    <div @click="playTTS(currentWord.word)" class="inline-flex items-center gap-2 px-4 py-2 bg-black/5 rounded-full cursor-pointer hover:bg-black/10 transition-colors">
-                        <span class="font-mono text-sm opacity-60">{{ currentWord.phonetic }}</span>
-                        <span class="text-lg">🔊</span>
+                
+                <div class="glass-card p-10 text-center shadow-xl">
+                    <div class="inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-600 text-[10px] font-black mb-4 uppercase">
+                        {{ currentWord.affix }} logic: {{ currentWord.logic }}
                     </div>
-                    <div class="my-8 h-px bg-black/5"></div>
-                    <div class="space-y-2">
-                        <span class="text-sm font-bold opacity-30 italic">{{ currentWord.pos }}</span>
-                        <p class="text-2xl font-bold">{{ currentWord.meaning }}</p>
-                    </div>
+                    <h3 class="text-5xl font-black mb-2">{{ currentWord.word }}</h3>
+                    <div @click="playTTS(currentWord.word)" class="text-sm opacity-40 mb-8 cursor-pointer">/ {{ currentWord.phonetic }} / 🔊</div>
+                    <div class="h-px bg-black/5 mb-8"></div>
+                    <p class="text-sm font-bold text-gray-400 italic mb-1">{{ currentWord.pos }}</p>
+                    <p class="text-2xl font-black">{{ currentWord.meaning }}</p>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4 mt-8">
                     <button @click="studyIdx--" :disabled="studyIdx === 0" class="py-5 glass-card font-bold disabled:opacity-20 btn-active">PREV</button>
-                    <button @click="nextStudyStep" class="py-5 bg-black text-white rounded-[2.5rem] font-bold btn-active shadow-lg">
-                        {{ isLastWord ? 'START QUIZ' : 'NEXT' }}
+                    <button @click="nextStudyStep" class="py-5 bg-black text-white rounded-[2rem] font-bold btn-active">
+                        {{ studyIdx === flatWords.length - 1 ? 'FINISH' : 'NEXT' }}
                     </button>
                 </div>
             </div>
 
-            <div v-if="view === 'quiz'" class="flex-1 flex flex-col animate__animated animate__fadeIn">
+            <div v-if="view === 'quiz'" class="flex flex-col">
                 <div class="text-center mb-8">
-                    <div class="text-4xl font-black mb-1">{{ quizScore }}<span class="text-sm opacity-20">/{{ quizList.length }}</span></div>
-                    <div class="text-[10px] font-bold opacity-30 tracking-widest uppercase">Accuracy Score</div>
+                    <div class="text-4xl font-black">{{ quizScore }}<span class="text-sm opacity-20">/{{ quizList.length }}</span></div>
+                    <div class="text-[10px] font-bold opacity-30 uppercase tracking-widest">Quiz Progress</div>
                 </div>
 
-                <div class="glass-card p-8 text-center" :class="{'animate-shake': isError}">
-                    <button @click="playTTS(quizList[quizIdx].word)" class="w-20 h-20 rounded-full bg-black/5 mb-6 text-3xl btn-active">🔊</button>
+                <div class="glass-card p-8 text-center" :class="{'animate-pulse border-red-500': isError}">
+                    <button @click="playTTS(quizList[quizIdx].word)" class="w-16 h-16 rounded-full bg-black/5 mb-6 text-xl btn-active">🔊</button>
                     <p class="text-xs font-bold opacity-40 mb-2 uppercase">{{ quizList[quizIdx].logic }}</p>
                     <h3 class="text-2xl font-bold mb-8">{{ quizList[quizIdx].meaning }}</h3>
-                    
                     <input type="text" v-model="quizInput" @keyup.enter="handleQuizSubmit"
-                           class="w-full p-5 rounded-2xl bg-black/5 border-2 border-transparent focus:border-black outline-none text-center text-2xl font-black tracking-widest uppercase"
-                           placeholder="TYPE WORD" autofocus spellcheck="false">
+                           class="w-full p-4 rounded-xl bg-black/5 border-2 border-transparent focus:border-black outline-none text-center text-xl font-black uppercase tracking-widest"
+                           placeholder="输入单词..." autofocus spellcheck="false">
                 </div>
-
-                <button @click="handleQuizSubmit" class="mt-6 py-5 bg-black text-white rounded-[2rem] font-black btn-active">SUBMIT ANSWER</button>
+                <button @click="handleQuizSubmit" class="mt-6 py-5 bg-black text-white rounded-2xl font-black btn-active">SUBMIT</button>
             </div>
 
-            <div v-if="view === 'result'" class="flex-1 flex flex-col items-center justify-center text-center">
-                <div class="text-9xl mb-6">🎯</div>
-                <h2 class="text-4xl font-black mb-2">MASTERED!</h2>
-                <p class="opacity-40 mb-10 font-medium">Your linguistic logic is sharpening, Nova.</p>
-                <button @click="goHome" class="w-full py-5 bg-white rounded-2xl font-black shadow-xl btn-active border border-black/5">BACK TO DASHBOARD</button>
+            <div v-if="view === 'result'" class="text-center py-20">
+                <div class="text-8xl mb-6">🏆</div>
+                <h2 class="text-4xl font-black mb-2">COMPLETE!</h2>
+                <p class="opacity-50 mb-10">Great job, Nova. You've mastered this set.</p>
+                <button @click="goHome" class="w-full py-5 bg-white border border-black/10 rounded-2xl font-black shadow-lg btn-active">BACK HOME</button>
             </div>
         </main>
-        
-        <footer class="p-6 text-center safe-bottom">
-            <p class="text-[10px] font-bold opacity-20 tracking-widest">© 2026 ETYMOFLOW PRO | UNIVERSAL ADAPTIVE UI</p>
+
+        <footer class="p-6 text-center text-[10px] font-bold opacity-20 safe-bottom">
+            © 2026 ETYMOFLOW PRO | ENTP OPTIMIZED
         </footer>
     </div>
 
-   <script>
-    const { createApp, ref, computed, onMounted } = Vue;
+    <script>
+        const { createApp, ref, computed, onMounted } = Vue;
 
-    createApp({
-        setup() {
-            const view = ref('home');
-            const allLessons = ref([]); // 确保初始状态是空数组
-            const currentLessonId = ref('lesson1');
-            const studyIdx = ref(0);
-            const activeLesson = ref(null);
-            
-            const quizList = ref([]);
-            const quizIdx = ref(0);
-            const quizInput = ref('');
-            const quizScore = ref(0);
-            const isError = ref(false);
+        createApp({
+            setup() {
+                const view = ref('home');
+                const allLessons = ref([]);
+                const currentLessonId = ref('lesson1');
+                const activeLesson = ref(null);
+                const studyIdx = ref(0);
+                
+                const quizList = ref([]);
+                const quizIdx = ref(0);
+                const quizInput = ref('');
+                const quizScore = ref(0);
+                const isError = ref(false);
 
-            // 1. 健壮的数据加载逻辑
-            onMounted(async () => {
-                try {
-                    const res = await fetch('data.json');
-                    const data = await res.json();
-                    
-                    // 自动适配格式：如果 data 是数组直接用，如果是单对象则包装成数组
-                    if (Array.isArray(data)) {
-                        allLessons.value = data;
-                    } else if (data && typeof data === 'object') {
-                        // 如果 JSON 结构是 { "lessons": [...] }
-                        if (data.lessons && Array.isArray(data.lessons)) {
+                // 数据加载：解决 flatMap 报错的关键
+                onMounted(async () => {
+                    try {
+                        const res = await fetch('data.json');
+                        const data = await res.json();
+                        // 兼容多种 JSON 格式
+                        if (Array.isArray(data)) {
+                            allLessons.value = data;
+                        } else if (data.lessons) {
                             allLessons.value = data.lessons;
                         } else {
-                            // 如果只是单课对象
                             allLessons.value = [data];
                         }
+                    } catch (e) {
+                        console.error("Data Load Error:", e);
                     }
-                } catch (e) {
-                    console.error("数据加载失败。提示：请确保在本地服务器（如 Live Server）下运行，且 data.json 格式正确。");
-                }
-            });
+                });
 
-            // 2. 扁平化单词列表（增加安全检查）
-            const flatWords = computed(() => {
-                if (!activeLesson.value || !activeLesson.value.groups) return [];
-                return activeLesson.value.groups.flatMap(g => 
-                    (g.items || []).map(i => ({ 
-                        ...i, 
-                        affix: g.affix || '', 
-                        logic: g.logic || '' 
-                    }))
-                );
-            });
-
-            // 3. 安全获取当前单词（防止读取 undefined.logic）
-            const currentWord = computed(() => {
-                const words = flatWords.value;
-                if (words.length > 0 && words[studyIdx.value]) {
-                    return words[studyIdx.value];
-                }
-                // 兜底空对象
-                return { word: '', phonetic: '', meaning: '', logic: '', pos: '', affix: '' };
-            });
-
-            // 4. 功能函数
-            const startStudy = (lesson) => {
-                activeLesson.value = lesson;
-                currentLessonId.value = lesson.id || 'lesson1';
-                studyIdx.value = 0;
-                view.value = 'study';
-                // 延迟播放，确保在计算属性更新后
-                setTimeout(() => {
-                    if (flatWords.value.length > 0) playTTS(flatWords.value[0].word);
-                }, 100);
-            };
-
-            const nextStudyStep = () => {
-                if (studyIdx.value < flatWords.value.length - 1) {
-                    studyIdx.value++;
-                    playTTS(currentWord.value.word);
-                } else {
-                    startQuiz(flatWords.value);
-                }
-            };
-
-            const startQuiz = (words) => {
-                quizList.value = [...words].sort(() => Math.random() - 0.5);
-                quizIdx.value = 0;
-                quizScore.value = 0;
-                quizInput.value = '';
-                view.value = 'quiz';
-            };
-
-            const startTotalQuiz = () => {
-                currentLessonId.value = 'lesson5';
-                // 增加数组检测
-                if (!Array.isArray(allLessons.value)) return;
-
-                const total = allLessons.value.flatMap(l => {
-                    if (!l.groups) return [];
-                    return l.groups.flatMap(g => 
+                // 工具：将课程数据展平为单词列表
+                const getFlatWords = (lesson) => {
+                    if (!lesson || !lesson.groups) return [];
+                    return lesson.groups.flatMap(g => 
                         (g.items || []).map(i => ({ ...i, affix: g.affix, logic: g.logic }))
                     );
-                });
-                if (total.length > 0) startQuiz(total);
-            };
+                };
 
-            const handleQuizSubmit = () => {
-                if (quizList.value.length === 0) return;
-                
-                const correct = quizList.value[quizIdx.value].word.toLowerCase().trim();
-                if (quizInput.value.toLowerCase().trim() === correct) {
-                    quizScore.value++;
-                    playTTS(correct);
-                    if (quizIdx.value < quizList.value.length - 1) {
-                        quizIdx.value++;
-                        quizInput.value = '';
-                    } else { 
-                        view.value = 'result'; 
+                const flatWords = computed(() => getFlatWords(activeLesson.value));
+                const currentWord = computed(() => flatWords.value[studyIdx.value] || {});
+
+                // 交互函数
+                const startStudy = (lesson) => {
+                    activeLesson.value = lesson;
+                    currentLessonId.value = lesson.id;
+                    studyIdx.value = 0;
+                    view.value = 'study';
+                };
+
+                const nextStudyStep = () => {
+                    if (studyIdx.value < flatWords.value.length - 1) {
+                        studyIdx.value++;
+                        playTTS(currentWord.value.word);
+                    } else {
+                        view.value = 'result'; // 学习完提示完成
                     }
-                } else {
-                    isError.value = true;
-                    setTimeout(() => isError.value = false, 500);
-                }
-            };
+                };
 
-            const playTTS = (text) => {
-                if (!text) return;
-                const utter = new SpeechSynthesisUtterance(text);
-                utter.lang = 'en-GB';
-                utter.rate = 0.8;
-                window.speechSynthesis.cancel(); // 先停止之前的播放
-                window.speechSynthesis.speak(utter);
-            };
+                const startLessonQuiz = (lesson) => {
+                    const words = getFlatWords(lesson);
+                    initQuiz(words);
+                };
 
-            const goHome = () => { 
-                view.value = 'home'; 
-                currentLessonId.value = 'lesson1'; 
-            };
+                const startTotalQuiz = () => {
+                    // 这里修复了 flatMap 报错：确保 allLessons.value 是数组
+                    if (!allLessons.value || allLessons.value.length === 0) return;
+                    const total = allLessons.value.flatMap(l => getFlatWords(l));
+                    initQuiz(total);
+                };
 
-            return {
-                view, allLessons, currentLessonId, studyIdx, activeLesson, flatWords, currentWord,
-                isLastWord: computed(() => studyIdx.value === flatWords.value.length - 1),
-                quizList, quizIdx, quizInput, quizScore, isError,
-                startStudy, nextStudyStep, startTotalQuiz, handleQuizSubmit, playTTS, goHome
-            };
-        }
-    }).mount('#app');
-</script>
+                const initQuiz = (words) => {
+                    quizList.value = [...words].sort(() => Math.random() - 0.5);
+                    quizIdx.value = 0;
+                    quizScore.value = 0;
+                    quizInput.value = '';
+                    view.value = 'quiz';
+                };
+
+                const handleQuizSubmit = () => {
+                    const target = quizList.value[quizIdx.value].word.toLowerCase().trim();
+                    if (quizInput.value.toLowerCase().trim() === target) {
+                        quizScore.value++;
+                        if (quizIdx.value < quizList.value.length - 1) {
+                            quizIdx.value++;
+                            quizInput.value = '';
+                        } else {
+                            view.value = 'result';
+                        }
+                    } else {
+                        isError.value = true;
+                        setTimeout(() => isError.value = false, 500);
+                    }
+                };
+
+                const playTTS = (text) => {
+                    window.speechSynthesis.cancel();
+                    const utter = new SpeechSynthesisUtterance(text);
+                    utter.lang = 'en-US';
+                    window.speechSynthesis.speak(utter);
+                };
+
+                const goHome = () => { view.value = 'home'; };
+
+                return {
+                    view, allLessons, currentLessonId, activeLesson, studyIdx, flatWords, currentWord,
+                    quizList, quizIdx, quizInput, quizScore, isError,
+                    startStudy, nextStudyStep, startLessonQuiz, startTotalQuiz, handleQuizSubmit, playTTS, goHome
+                };
+            }
+        }).mount('#app');
+    </script>
 </body>
 </html>
