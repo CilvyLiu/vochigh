@@ -6,41 +6,40 @@
     <title>EtymoFlow Pro - Nova's Lab</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-   <style>
-    /* 基础配色与课程主题 */
-    :root { --p-color: #6366f1; --bg: #f8fafc; }
-    .theme-lesson1 { --p-color: #3b82f6; --bg: #f8fafc; } /* 后缀篇 - 蓝色系 */
-    .theme-lesson2 { --p-color: #059669; --bg: #f0fdf4; } /* 前缀篇1 - 绿色系 */
-    .theme-lesson3 { --p-color: #d946ef; --bg: #fdf2f8; } /* 前缀篇2 - 粉紫系 */
-    .theme-lesson4 { --p-color: #f59e0b; --bg: #fffbeb; } /* 词根篇1 - 琥珀系 */
-    .theme-lesson5 { --p-color: #6366f1; --bg: #eef2ff; } /* 词根篇2 - 靛蓝系 */
+    <style>
+        /* 基础配色与课程主题 */
+        :root { --p-color: #6366f1; --bg: #f8fafc; }
+        .theme-lesson1 { --p-color: #3b82f6; --bg: #f8fafc; } /* 后缀篇 - 蓝色系 */
+        .theme-lesson2 { --p-color: #059669; --bg: #f0fdf4; } /* 前缀篇1 - 绿色系 */
+        .theme-lesson3 { --p-color: #d946ef; --bg: #fdf2f8; } /* 前缀篇2 - 粉紫系 */
+        .theme-lesson4 { --p-color: #f59e0b; --bg: #fffbeb; } /* 词根篇1 - 琥珀系 */
+        .theme-lesson5 { --p-color: #6366f1; --bg: #eef2ff; } /* 词根篇2 - 靛蓝系 */
 
-    /* 核心逻辑：Type 颜色区分 (Suffix/Prefix/Root) */
-    /* 我们用特定的颜色映射到这些类别上 */
-    .color-prefix { color: #ef4444 !important; } /* 前缀：红色 (警告/引导/动作起始) */
-    .color-suffix { color: #8b5cf6 !important; } /* 后缀：紫色 (词性/结果/稳定) */
-    .color-root   { color: #0ea5e9 !important; } /* 词根：天蓝 (核心含义/水源) */
+        /* 核心逻辑：Type 颜色区分 (Suffix/Prefix/Root) */
+        .color-prefix { color: #ef4444 !important; } /* 前缀：红色 (警告/引导/动作起始) */
+        .color-suffix { color: #8b5cf6 !important; } /* 后缀：紫色 (词性/结果/稳定) */
+        .color-root   { color: #0ea5e9 !important; } /* 词根：天蓝 (核心含义/水源) */
 
-    /* 对应的标签背景色 */
-    .bg-prefix { background-color: #fef2f2; color: #ef4444; }
-    .bg-suffix { background-color: #f5f3ff; color: #8b5cf6; }
-    .bg-root   { background-color: #f0f9ff; color: #0ea5e9; }
+        /* 对应的标签背景色 */
+        .bg-prefix { background-color: #fef2f2; color: #ef4444; }
+        .bg-suffix { background-color: #f5f3ff; color: #8b5cf6; }
+        .bg-root   { background-color: #f0f9ff; color: #0ea5e9; }
 
-    /* UI 组件样式 */
-    body { background-color: var(--bg); transition: all 0.5s ease; user-select: none; }
-    [v-cloak] { display: none; }
-    .glass-card { 
-        background: rgba(255, 255, 255, 0.8); 
-        backdrop-filter: blur(20px); 
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-radius: 2rem;
-    }
-    .btn-active:active { transform: scale(0.96); }
-    .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+        /* UI 组件样式 */
+        body { background-color: var(--bg); transition: all 0.5s ease; user-select: none; }
+        [v-cloak] { display: none; }
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 2rem;
+        }
+        .btn-active:active { transform: scale(0.96); }
+        .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 
-    /* 单词标题动态变色过渡 */
-    .word-title { transition: color 0.3s ease; }
-</style>
+        /* 单词标题动态变色过渡 */
+        .word-title { transition: color 0.3s ease; }
+    </style>
 </head>
 <body :class="'theme-' + currentLessonId">
     <div id="app" v-cloak class="max-w-2xl mx-auto min-h-screen flex flex-col">
@@ -53,119 +52,120 @@
             <button v-if="view !== 'home'" @click="goHome" class="text-xs font-bold px-4 py-2 bg-white rounded-full shadow-sm">EXIT</button>
         </header>
 
-       <main class="flex-1 px-6 pb-10">
-    <div v-if="view === 'home'" class="space-y-6">
-        <h2 class="text-4xl font-black mb-8">Hello Nova,<br><span class="opacity-30 text-2xl">What's the plan?</span></h2>
-        
-        <div v-for="l in allLessons" :key="l.id" class="glass-card p-5 mb-4 border-l-8" :style="{borderLeftColor: 'var(--p-color)'}">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <div class="text-[10px] font-bold opacity-30">{{ l.id.toUpperCase() }}</div>
-                    <h3 class="text-xl font-black">{{ l.title }}</h3>
+        <main class="flex-1 px-6 pb-10">
+            <div v-if="view === 'home'" class="space-y-6">
+                <h2 class="text-4xl font-black mb-8">Hello Nova,<br><span class="opacity-30 text-2xl">What's the plan?</span></h2>
+                
+                <div v-for="l in allLessons" :key="l.id" class="glass-card p-5 mb-4 border-l-8" :style="{borderLeftColor: 'var(--p-color)'}">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-[10px] font-bold opacity-30">{{ l.id.toUpperCase() }}</div>
+                            <h3 class="text-xl font-black">{{ l.title }}</h3>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button @click="startStudy(l)" class="py-3 bg-white/50 rounded-xl text-sm font-bold btn-active border border-black/5">📖 学习内容</button>
+                        <button @click="startLessonQuiz(l)" class="py-3 bg-white/50 rounded-xl text-sm font-bold btn-active border border-black/5">✍️ 单课测试</button>
+                    </div>
+                </div>
+
+                <button @click="startTotalQuiz" class="w-full py-6 glass-card bg-black text-white font-black text-xl btn-active shadow-2xl mt-4">
+                    🚀 start here
+                </button>
+            </div>
+
+            <div v-if="view === 'study'" class="flex flex-col h-full justify-center">
+                <div class="mb-6 flex justify-between items-end">
+                    <span class="text-xs font-black opacity-20 uppercase">Learning Mode</span>
+                    <span class="font-mono text-sm font-bold" :style="{color: 'var(--p-color)'}">{{ studyIdx + 1 }} / {{ flatWords.length }}</span>
+                </div>
+                
+                <div class="glass-card p-10 text-center shadow-xl">
+                    <div class="inline-block px-3 py-1 rounded-full text-[10px] font-black mb-4 uppercase tracking-widest"
+                         :class="'bg-' + (currentWord.type || 'root')">
+                        {{ currentWord.type || 'root' }} | {{ currentWord.affix }}
+                    </div>
+
+                    <h3 class="text-5xl font-black mb-2 transition-colors duration-300" 
+                        :class="'color-' + (currentWord.type || 'root')">
+                        {{ currentWord.word }}
+                    </h3>
+
+                    <div @click="playTTS(currentWord.word)" class="text-sm opacity-40 mb-8 cursor-pointer">
+                        / {{ currentWord.phonetic }} / 🔊
+                    </div>
+
+                    <div class="h-px bg-black/5 mb-8 flex items-center justify-center">
+                        <span class="bg-white px-3 text-[10px] font-bold opacity-20 uppercase tracking-widest">Logic Breakdown</span>
+                    </div>
+                    
+                    <p class="text-lg font-bold mb-8 px-4 leading-tight text-gray-700 italic">
+                        "{{ currentWord.logic }}"
+                    </p>
+
+                    <div class="h-px bg-black/5 mb-8"></div>
+
+                    <p class="text-sm font-bold text-gray-400 italic mb-1">{{ currentWord.pos }}</p>
+                    <p class="text-2xl font-black">{{ currentWord.meaning }}</p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 mt-8">
+                    <button @click="studyIdx--" :disabled="studyIdx === 0" class="py-5 glass-card font-bold disabled:opacity-20 btn-active text-xs">PREV</button>
+                    <button @click="nextStudyStep" class="py-5 bg-black text-white rounded-[2rem] font-bold btn-active text-xs">
+                        {{ studyIdx === flatWords.length - 1 ? 'FINISH' : 'NEXT' }}
+                    </button>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-3">
-                <button @click="startStudy(l)" class="py-3 bg-white/50 rounded-xl text-sm font-bold btn-active border border-black/5">📖 学习内容</button>
-                <button @click="startLessonQuiz(l)" class="py-3 bg-white/50 rounded-xl text-sm font-bold btn-active border border-black/5">✍️ 单课测试</button>
+
+            <div v-if="view === 'quiz'" class="flex flex-col">
+                <div class="text-center mb-8">
+                    <div class="text-4xl font-black">{{ quizScore }}<span class="text-sm opacity-20">/{{ quizList.length }}</span></div>
+                    <div class="text-[10px] font-bold opacity-30 uppercase tracking-widest">Quiz Progress</div>
+                </div>
+
+                <div class="glass-card p-8 text-center transition-all duration-300 mb-8" 
+                     :class="{'animate-pulse border-red-500': isError}"
+                     :style="!isError ? { borderColor: quizInput ? 'var(--type-color)' : 'transparent', borderWidth: '2px' } : {}">
+                    
+                    <button @click="playTTS(quizList[quizIdx].word)" class="w-16 h-16 rounded-full bg-black/5 mb-6 text-xl btn-active">🔊</button>
+                    
+                    <div class="inline-block px-2 py-0.5 rounded text-[8px] font-bold mb-2 uppercase opacity-60"
+                         :class="'bg-' + quizList[quizIdx].type">
+                        {{ quizList[quizIdx].type }}
+                    </div>
+                    
+                    <p class="text-xs font-bold opacity-40 mb-2 uppercase tracking-tighter">{{ quizList[quizIdx].logic }}</p>
+                    <h3 class="text-2xl font-bold mb-8">{{ quizList[quizIdx].meaning }}</h3>
+                    
+                    <input type="text" v-model="quizInput" @keyup.enter="handleQuizSubmit"
+                           class="w-full p-4 rounded-xl bg-black/5 border-2 outline-none text-center text-xl font-black uppercase tracking-widest transition-all"
+                           :class="'focus:border-' + quizList[quizIdx].type" 
+                           :style="{ '--type-color': getThemeColor(quizList[quizIdx].type) }"
+                           placeholder="TYPE WORD..." autofocus spellcheck="false">
+                </div>
+
+                <div class="glass-card p-8 text-center" :class="{'animate-pulse border-red-500': isError}">
+                    <button @click="playTTS(quizList[quizIdx].word)" class="w-16 h-16 rounded-full bg-black/5 mb-6 text-xl btn-active">🔊</button>
+                    <p class="text-xs font-bold opacity-40 mb-2 uppercase">{{ quizList[quizIdx].logic }}</p>
+                    <h3 class="text-2xl font-bold mb-8">{{ quizList[quizIdx].meaning }}</h3>
+                    <input type="text" v-model="quizInput" @keyup.enter="handleQuizSubmit"
+                           class="w-full p-4 rounded-xl bg-black/5 border-2 border-transparent focus:border-black outline-none text-center text-xl font-black uppercase tracking-widest"
+                           placeholder="输入单词..." autofocus spellcheck="false">
+                </div>
+                
+                <button @click="handleQuizSubmit" class="mt-6 py-5 bg-black text-white rounded-2xl font-black btn-active">SUBMIT</button>
             </div>
-        </div>
 
-        <button @click="startTotalQuiz" class="w-full py-6 glass-card bg-black text-white font-black text-xl btn-active shadow-2xl mt-4">
-            🚀 start here
-        </button>
-    </div>
-
-    <div v-if="view === 'study'" class="flex flex-col h-full justify-center">
-        <div class="mb-6 flex justify-between items-end">
-            <span class="text-xs font-black opacity-20 uppercase">Learning Mode</span>
-            <span class="font-mono text-sm font-bold" :style="{color: 'var(--p-color)'}">{{ studyIdx + 1 }} / {{ flatWords.length }}</span>
-        </div>
-        
-        <div class="glass-card p-10 text-center shadow-xl">
-            <div class="inline-block px-3 py-1 rounded-full text-[10px] font-black mb-4 uppercase tracking-widest"
-                 :class="'bg-' + (currentWord.type || 'root')">
-                {{ currentWord.type || 'root' }} | {{ currentWord.affix }}
+            <div v-if="view === 'result'" class="text-center py-20">
+                <div class="text-8xl mb-6">🏆</div>
+                <h2 class="text-4xl font-black mb-2">COMPLETE!</h2>
+                <p class="opacity-50 mb-10">Great job. You've mastered this set.</p>
+                <button @click="goHome" class="w-full py-5 bg-white border border-black/10 rounded-2xl font-black shadow-lg btn-active">BACK HOME</button>
             </div>
+        </main>
 
-            <h3 class="text-5xl font-black mb-2 transition-colors duration-300" 
-                :class="'color-' + (currentWord.type || 'root')">
-                {{ currentWord.word }}
-            </h3>
-
-            <div @click="playTTS(currentWord.word)" class="text-sm opacity-40 mb-8 cursor-pointer">
-                / {{ currentWord.phonetic }} / 🔊
-            </div>
-
-            <div class="h-px bg-black/5 mb-8 flex items-center justify-center">
-                <span class="bg-white px-3 text-[10px] font-bold opacity-20 uppercase tracking-widest">Logic Breakdown</span>
-            </div>
-            
-            <p class="text-lg font-bold mb-8 px-4 leading-tight text-gray-700 italic">
-                "{{ currentWord.logic }}"
-            </p>
-
-            <div class="h-px bg-black/5 mb-8"></div>
-
-            <p class="text-sm font-bold text-gray-400 italic mb-1">{{ currentWord.pos }}</p>
-            <p class="text-2xl font-black">{{ currentWord.meaning }}</p>
-        </div>
-        
-        <div class="grid grid-cols-2 gap-4 mt-8">
-            <button @click="studyIdx--" :disabled="studyIdx === 0" class="py-5 glass-card font-bold disabled:opacity-20 btn-active text-xs">PREV</button>
-            <button @click="nextStudyStep" class="py-5 bg-black text-white rounded-[2rem] font-bold btn-active text-xs">
-                {{ studyIdx === flatWords.length - 1 ? 'FINISH' : 'NEXT' }}
-            </button>
-        </div>
-    </div>
-
-    <div v-if="view === 'quiz'" class="flex flex-col">
-        <div class="text-center mb-8">
-            <div class="text-4xl font-black">{{ quizScore }}<span class="text-sm opacity-20">/{{ quizList.length }}</span></div>
-            <div class="text-[10px] font-bold opacity-30 uppercase tracking-widest">Quiz Progress</div>
-        </div>
-
-        <div class="glass-card p-8 text-center transition-all duration-300 mb-8" 
-             :class="{'animate-pulse border-red-500': isError}"
-             :style="!isError ? { borderColor: quizInput ? 'var(--type-color)' : 'transparent', borderWidth: '2px' } : {}">
-            
-            <button @click="playTTS(quizList[quizIdx].word)" class="w-16 h-16 rounded-full bg-black/5 mb-6 text-xl btn-active">🔊</button>
-            
-            <div class="inline-block px-2 py-0.5 rounded text-[8px] font-bold mb-2 uppercase opacity-60"
-                 :class="'bg-' + quizList[quizIdx].type">
-                {{ quizList[quizIdx].type }}
-            </div>
-            
-            <p class="text-xs font-bold opacity-40 mb-2 uppercase tracking-tighter">{{ quizList[quizIdx].logic }}</p>
-            <h3 class="text-2xl font-bold mb-8">{{ quizList[quizIdx].meaning }}</h3>
-            
-            <input type="text" v-model="quizInput" @keyup.enter="handleQuizSubmit"
-                   class="w-full p-4 rounded-xl bg-black/5 border-2 outline-none text-center text-xl font-black uppercase tracking-widest transition-all"
-                   :class="'focus:border-' + quizList[quizIdx].type" 
-                   :style="{ '--type-color': getThemeColor(quizList[quizIdx].type) }"
-                   placeholder="TYPE WORD..." autofocus spellcheck="false">
-        </div>
-
-        <div class="glass-card p-8 text-center" :class="{'animate-pulse border-red-500': isError}">
-            <button @click="playTTS(quizList[quizIdx].word)" class="w-16 h-16 rounded-full bg-black/5 mb-6 text-xl btn-active">🔊</button>
-            <p class="text-xs font-bold opacity-40 mb-2 uppercase">{{ quizList[quizIdx].logic }}</p>
-            <h3 class="text-2xl font-bold mb-8">{{ quizList[quizIdx].meaning }}</h3>
-            <input type="text" v-model="quizInput" @keyup.enter="handleQuizSubmit"
-                   class="w-full p-4 rounded-xl bg-black/5 border-2 border-transparent focus:border-black outline-none text-center text-xl font-black uppercase tracking-widest"
-                   placeholder="输入单词..." autofocus spellcheck="false">
-        </div>
-        
-        <button @click="handleQuizSubmit" class="mt-6 py-5 bg-black text-white rounded-2xl font-black btn-active">SUBMIT</button>
-    </div>
-
-    <div v-if="view === 'result'" class="text-center py-20">
-        <div class="text-8xl mb-6">🏆</div>
-        <h2 class="text-4xl font-black mb-2">COMPLETE!</h2>
-        <p class="opacity-50 mb-10">Great job. You've mastered this set.</p>
-        <button @click="goHome" class="w-full py-5 bg-white border border-black/10 rounded-2xl font-black shadow-lg btn-active">BACK HOME</button>
-    </div>
-</main>
         <footer class="p-6 text-center text-[10px] font-bold opacity-20 safe-bottom">
-            © 2026 ETYMOFLOW PRO | ENTP OPTIMIZED
+            © 2026 ETYMOFLOW PRO | NOVA OPTIMIZED
         </footer>
     </div>
 
@@ -186,12 +186,10 @@
                 const quizScore = ref(0);
                 const isError = ref(false);
 
-                // 数据加载：解决 flatMap 报错的关键
                 onMounted(async () => {
                     try {
                         const res = await fetch('data.json');
                         const data = await res.json();
-                        // 兼容多种 JSON 格式
                         if (Array.isArray(data)) {
                             allLessons.value = data;
                         } else if (data.lessons) {
@@ -204,7 +202,6 @@
                     }
                 });
 
-                // 工具：将课程数据展平为单词列表
                 const getFlatWords = (lesson) => {
                     if (!lesson || !lesson.groups) return [];
                     return lesson.groups.flatMap(g => 
@@ -212,7 +209,6 @@
                             ...i, 
                             affix: g.affix, 
                             logic: g.logic, 
-                            // 核心：把组里的 type (prefix/suffix/root) 注入到每个单词中
                             type: g.type || 'root' 
                         }))
                     );
@@ -221,7 +217,6 @@
                 const flatWords = computed(() => getFlatWords(activeLesson.value));
                 const currentWord = computed(() => flatWords.value[studyIdx.value] || {});
 
-                // 交互函数
                 const startStudy = (lesson) => {
                     activeLesson.value = lesson;
                     currentLessonId.value = lesson.id;
@@ -234,7 +229,7 @@
                         studyIdx.value++;
                         playTTS(currentWord.value.word);
                     } else {
-                        view.value = 'result'; // 学习完提示完成
+                        view.value = 'result';
                     }
                 };
 
@@ -244,7 +239,6 @@
                 };
 
                 const startTotalQuiz = () => {
-                    // 这里修复了 flatMap 报错：确保 allLessons.value 是数组
                     if (!allLessons.value || allLessons.value.length === 0) return;
                     const total = allLessons.value.flatMap(l => getFlatWords(l));
                     initQuiz(total);
@@ -277,7 +271,7 @@
                 const playTTS = (text) => {
                     window.speechSynthesis.cancel();
                     const utter = new SpeechSynthesisUtterance(text);
-                    utter.lang = 'en-US';
+                    utter.lang = 'en-GB';
                     window.speechSynthesis.speak(utter);
                 };
 
