@@ -7,25 +7,21 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 基础配色与课程主题 */
         :root { --p-color: #6366f1; --bg: #f8fafc; }
-        .theme-lesson1 { --p-color: #3b82f6; --bg: #f8fafc; } /* 后缀篇 - 蓝色系 */
-        .theme-lesson2 { --p-color: #059669; --bg: #f0fdf4; } /* 前缀篇1 - 绿色系 */
-        .theme-lesson3 { --p-color: #d946ef; --bg: #fdf2f8; } /* 前缀篇2 - 粉紫系 */
-        .theme-lesson4 { --p-color: #f59e0b; --bg: #fffbeb; } /* 词根篇1 - 琥珀系 */
-        .theme-lesson5 { --p-color: #6366f1; --bg: #eef2ff; } /* 词根篇2 - 靛蓝系 */
+        .theme-lesson1 { --p-color: #3b82f6; --bg: #f8fafc; }
+        .theme-lesson2 { --p-color: #059669; --bg: #f0fdf4; }
+        .theme-lesson3 { --p-color: #d946ef; --bg: #fdf2f8; }
+        .theme-lesson4 { --p-color: #f59e0b; --bg: #fffbeb; }
+        .theme-lesson5 { --p-color: #6366f1; --bg: #eef2ff; }
 
-        /* 核心逻辑：Type 颜色区分 (Suffix/Prefix/Root) */
-        .color-prefix { color: #ef4444 !important; } /* 前缀：红色 (警告/引导/动作起始) */
-        .color-suffix { color: #8b5cf6 !important; } /* 后缀：紫色 (词性/结果/稳定) */
-        .color-root   { color: #0ea5e9 !important; } /* 词根：天蓝 (核心含义/水源) */
+        .color-prefix { color: #ef4444 !important; }
+        .color-suffix { color: #8b5cf6 !important; }
+        .color-root   { color: #0ea5e9 !important; }
 
-        /* 对应的标签背景色 */
         .bg-prefix { background-color: #fef2f2; color: #ef4444; }
         .bg-suffix { background-color: #f5f3ff; color: #8b5cf6; }
         .bg-root   { background-color: #f0f9ff; color: #0ea5e9; }
 
-        /* UI 组件样式 */
         body { background-color: var(--bg); transition: all 0.5s ease; user-select: none; }
         [v-cloak] { display: none; }
         .glass-card { 
@@ -36,8 +32,6 @@
         }
         .btn-active:active { transform: scale(0.96); }
         .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
-
-        /* 单词标题动态变色过渡 */
         .word-title { transition: color 0.3s ease; }
     </style>
 </head>
@@ -123,9 +117,9 @@
                     <div class="text-[10px] font-bold opacity-30 uppercase tracking-widest">Quiz Progress</div>
                 </div>
 
-                <div class="glass-card p-8 text-center transition-all duration-300 mb-8" 
+                <div v-if="quizList[quizIdx]" class="glass-card p-8 text-center transition-all duration-300 mb-8" 
                      :class="{'animate-pulse border-red-500': isError}"
-                     :style="!isError ? { borderColor: quizInput ? 'var(--type-color)' : 'transparent', borderWidth: '2px' } : {}">
+                     :style="!isError ? { borderColor: quizInput ? getThemeColor(quizList[quizIdx].type) : 'transparent', borderWidth: '2px' } : {}">
                     
                     <button @click="playTTS(quizList[quizIdx].word)" class="w-16 h-16 rounded-full bg-black/5 mb-6 text-xl btn-active">🔊</button>
                     
@@ -139,20 +133,9 @@
                     
                     <input type="text" v-model="quizInput" @keyup.enter="handleQuizSubmit"
                            class="w-full p-4 rounded-xl bg-black/5 border-2 outline-none text-center text-xl font-black uppercase tracking-widest transition-all"
-                           :class="'focus:border-' + quizList[quizIdx].type" 
-                           :style="{ '--type-color': getThemeColor(quizList[quizIdx].type) }"
                            placeholder="TYPE WORD..." autofocus spellcheck="false">
                 </div>
 
-                <div class="glass-card p-8 text-center" :class="{'animate-pulse border-red-500': isError}">
-                    <button @click="playTTS(quizList[quizIdx].word)" class="w-16 h-16 rounded-full bg-black/5 mb-6 text-xl btn-active">🔊</button>
-                    <p class="text-xs font-bold opacity-40 mb-2 uppercase">{{ quizList[quizIdx].logic }}</p>
-                    <h3 class="text-2xl font-bold mb-8">{{ quizList[quizIdx].meaning }}</h3>
-                    <input type="text" v-model="quizInput" @keyup.enter="handleQuizSubmit"
-                           class="w-full p-4 rounded-xl bg-black/5 border-2 border-transparent focus:border-black outline-none text-center text-xl font-black uppercase tracking-widest"
-                           placeholder="输入单词..." autofocus spellcheck="false">
-                </div>
-                
                 <button @click="handleQuizSubmit" class="mt-6 py-5 bg-black text-white rounded-2xl font-black btn-active">SUBMIT</button>
             </div>
 
@@ -168,79 +151,112 @@
             © 2026 ETYMOFLOW PRO | NOVA OPTIMIZED
         </footer>
     </div>
+
     <script>
-       const { createApp, ref, computed, onMounted } = Vue;
+        const { createApp, ref, computed, onMounted } = Vue;
         
         createApp({
             setup() {
                 const view = ref('home');
-                const allLessons = ref([]); // 初始为空阵列
+                const allLessons = ref([]);
                 const currentLesson = ref(null);
                 const studyIdx = ref(0);
                 
                 const quizWords = ref([]);
                 const quizIdx = ref(0);
-                const quizInput = ref(''); // 对应 HTML 中的 v-model
+                const quizInput = ref('');
                 const quizScore = ref(0);
                 const isError = ref(false);
-        
-                // --- 异步获取数据 ---
+
+                // --- 兼容性 TTS (标准英音) ---
+                const playTTS = (text) => {
+                    if(!text) return;
+                    window.speechSynthesis.cancel();
+                    const utter = new SpeechSynthesisUtterance(text);
+                    // 自动选择英音
+                    const voices = window.speechSynthesis.getVoices();
+                    const gbVoice = voices.find(v => v.lang.includes('en-GB')) || voices.find(v => v.lang.includes('en'));
+                    if(gbVoice) utter.voice = gbVoice;
+                    utter.lang = 'en-GB';
+                    utter.rate = 0.9;
+                    window.speechSynthesis.speak(utter);
+                };
+
+                // --- 数据加载 ---
                 const loadData = async () => {
                     try {
                         const response = await fetch('data.json');
                         const data = await response.json();
-                        allLessons.value = data.lessons; // 假设 JSON 根节点是 lessons
+                        allLessons.value = data.lessons || [];
                         console.log("Data loaded successfully, Nova.");
                     } catch (error) {
-                        console.error("Fetch failed! 检查 data.json 是否在同级目录:", error);
+                        console.error("Fetch failed! 确保 data.json 格式正确且在同级目录", error);
                     }
                 };
-        
-                onMounted(() => {
-                    loadData();
-                });
-        
-                // --- 辅助逻辑：扁平化单词 ---
+
+                onMounted(loadData);
+
+                // --- 单词处理逻辑 ---
                 const flattenWords = (lesson) => {
                     if (!lesson || !lesson.groups) return [];
                     return lesson.groups.flatMap(g => 
                         g.items.map(i => ({
                             ...i, 
-                            type: g.type, 
-                            affix: g.affix, 
-                            logic: g.logic 
+                            type: g.type || 'root', 
+                            affix: g.affix || '', 
+                            logic: g.logic || '' 
                         }))
                     );
                 };
-        
-                // --- 计算属性 (一定要加默认值防护) ---
+
                 const flatWords = computed(() => flattenWords(currentLesson.value));
                 const currentWord = computed(() => flatWords.value[studyIdx.value] || {});
                 const currentLessonId = computed(() => currentLesson.value?.id || '1');
-        
-                // --- 交互方法 ---
+
+                // --- 导航与功能 ---
                 const goHome = () => { view.value = 'home'; };
-        
+
                 const startStudy = (lesson) => {
                     currentLesson.value = lesson;
                     studyIdx.value = 0;
                     view.value = 'study';
+                    playTTS(currentWord.value.word);
                 };
-        
+
+                const nextStudyStep = () => {
+                    if (studyIdx.value < flatWords.value.length - 1) {
+                        studyIdx.value++;
+                        playTTS(currentWord.value.word);
+                    } else {
+                        view.value = 'home';
+                    }
+                };
+
                 const startLessonQuiz = (lesson) => {
                     quizWords.value = flattenWords(lesson).sort(() => Math.random() - 0.5);
+                    initQuizSession();
+                };
+
+                const startTotalQuiz = () => {
+                    const all = allLessons.value.flatMap(l => flattenWords(l));
+                    quizWords.value = all.sort(() => Math.random() - 0.5);
+                    initQuizSession();
+                };
+
+                const initQuizSession = () => {
                     quizIdx.value = 0;
                     quizScore.value = 0;
                     quizInput.value = '';
                     view.value = 'quiz';
                 };
-        
+
                 const handleQuizSubmit = () => {
                     const current = quizWords.value[quizIdx.value];
                     if (!current) return;
-        
+
                     if (quizInput.value.toLowerCase().trim() === current.word.toLowerCase().trim()) {
                         quizScore.value++;
+                        isError.value = false;
                         if (quizIdx.value < quizWords.value.length - 1) {
                             quizIdx.value++;
                             quizInput.value = '';
@@ -252,12 +268,16 @@
                         setTimeout(() => isError.value = false, 500);
                     }
                 };
-        
+
+                const getThemeColor = (type) => {
+                    const colors = { prefix: '#ef4444', suffix: '#8b5cf6', root: '#0ea5e9' };
+                    return colors[type] || '#6366f1';
+                };
+
                 return {
                     view, allLessons, currentLesson, studyIdx, flatWords, currentWord, currentLessonId,
-                    quizWords, quizIdx, quizInput, quizScore, isError,
-                    goHome, startStudy, startLessonQuiz, handleQuizSubmit,
-                    nextStudyStep: () => { /* 逻辑同上 */ } 
+                    quizList: quizWords, quizIdx, quizInput, quizScore, isError, // 映射 quizList 匹配 HTML
+                    goHome, startStudy, nextStudyStep, startLessonQuiz, startTotalQuiz, handleQuizSubmit, playTTS, getThemeColor
                 };
             }
         }).mount('#app');
