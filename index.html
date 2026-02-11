@@ -32,7 +32,6 @@
         }
         .btn-active:active { transform: scale(0.96); }
         .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
-        .word-title { transition: color 0.3s ease; }
     </style>
 </head>
 <body :class="'theme-' + currentLessonId">
@@ -71,7 +70,7 @@
             <div v-if="view === 'study'" class="flex flex-col h-full justify-center">
                 <div class="mb-6 flex justify-between items-end">
                     <span class="text-xs font-black opacity-20 uppercase">Learning Mode</span>
-                    <span class="font-mono text-sm font-bold" :style="{color: 'var(--p-color)'}">{{ studyIdx + 1 }} / {{ flatWords ? flatWords.length : 0 }}</span>
+                    <span class="font-mono text-sm font-bold" :style="{color: 'var(--p-color)'}">{{ studyIdx + 1 }} / {{ flatWords.length }}</span>
                 </div>
                 
                 <div v-if="currentWord && currentWord.word" class="glass-card p-10 text-center shadow-xl">
@@ -106,14 +105,14 @@
                 <div class="grid grid-cols-2 gap-4 mt-8">
                     <button @click="studyIdx--" :disabled="studyIdx === 0" class="py-5 glass-card font-bold disabled:opacity-20 btn-active text-xs">PREV</button>
                     <button @click="nextStudyStep" class="py-5 bg-black text-white rounded-[2rem] font-bold btn-active text-xs">
-                        {{ (flatWords && studyIdx === flatWords.length - 1) ? 'FINISH' : 'NEXT' }}
+                        {{ (studyIdx === flatWords.length - 1) ? 'FINISH' : 'NEXT' }}
                     </button>
                 </div>
             </div>
 
             <div v-if="view === 'quiz'" class="flex flex-col">
                 <div class="text-center mb-8">
-                    <div class="text-4xl font-black">{{ quizScore }}<span class="text-sm opacity-20">/{{ quizIdx + 1 }}<span class="text-sm opacity-20">/{{ quizList.length }}</span></div>
+                    <div class="text-4xl font-black">{{ quizScore }}<span class="text-sm opacity-20">/{{ quizIdx + 1 }}</span><span class="text-sm opacity-20">/{{ quizList.length }}</span></div>
                     <div class="text-[10px] font-bold opacity-30 uppercase tracking-widest">Quiz Progress</div>
                 </div>
 
@@ -136,14 +135,6 @@
                            class="w-full p-4 rounded-xl bg-black/5 border-2 outline-none text-center text-xl font-black uppercase tracking-widest transition-all focus:bg-white"
                            placeholder="TYPE WORD..." autofocus spellcheck="false">
                 </div>
-                    
-                    <p class="text-xs font-bold opacity-40 mb-2 uppercase tracking-tighter">{{ quizList[quizIdx].logic }}</p>
-                    <h3 class="text-2xl font-bold mb-8">{{ quizList[quizIdx].meaning }}</h3>
-                    
-                    <input type="text" v-model="quizInput" @keyup.enter="handleQuizSubmit"
-                           class="w-full p-4 rounded-xl bg-black/5 border-2 outline-none text-center text-xl font-black uppercase tracking-widest transition-all"
-                           placeholder="TYPE WORD..." autofocus spellcheck="false">
-                </div>
 
                 <button @click="handleQuizSubmit" class="mt-6 py-5 bg-black text-white rounded-2xl font-black btn-active">SUBMIT</button>
             </div>
@@ -151,7 +142,7 @@
             <div v-if="view === 'result'" class="text-center py-20">
                 <div class="text-8xl mb-6">🏆</div>
                 <h2 class="text-4xl font-black mb-2">COMPLETE!</h2>
-                <p class="opacity-50 mb-10">Great job. You've mastered this set.</p>
+                <p class="opacity-50 mb-10">Great job Nova. You've mastered this set.</p>
                 <button @click="goHome" class="w-full py-5 bg-white border border-black/10 rounded-2xl font-black shadow-lg btn-active">BACK HOME</button>
             </div>
         </main>
@@ -170,162 +161,99 @@
                 const allLessons = ref([]);
                 const currentLesson = ref(null);
                 const studyIdx = ref(0);
-                
                 const quizWords = ref([]);
                 const quizIdx = ref(0);
                 const quizInput = ref('');
                 const quizScore = ref(0);
                 const isError = ref(false);
 
-                // --- 兼容性 TTS (增强稳定版) ---
                 const playCloudAudio = (t) => {
-                    console.log("正在使用有道云端音频引擎...");
                     const url = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(t)}&type=2`;
                     const audio = new Audio(url);
-                    audio.play().catch(e => console.error("云端引擎失败:", e));
+                    audio.play().catch(e => console.error("Audio Failed:", e));
                 };
 
-               const playTTS = (text) => {
+                const playTTS = (text) => {
                     if(!text) return;
-                    
-                    // 1. 强力激活移动端音频上下文
                     const AudioContext = window.AudioContext || window.webkitAudioContext;
                     if (AudioContext) {
                         const context = new AudioContext();
-                        if (context.state === 'suspended') {
-                            context.resume();
-                        }
-                        // 创建一个极其微弱的振荡器并立即停止，强制系统分配音频资源
-                        const oscillator = context.createOscillator();
-                        const gainNode = context.createGain();
-                        gainNode.gain.value = 0.001; // 几乎无声
-                        oscillator.connect(gainNode);
-                        gainNode.connect(context.destination);
-                        oscillator.start(0);
-                        oscillator.stop(0.01);
+                        if (context.state === 'suspended') context.resume();
+                        const osc = context.createOscillator();
+                        const gain = context.createGain();
+                        gain.gain.value = 0.001;
+                        osc.connect(gain); gain.connect(context.destination);
+                        osc.start(0); osc.stop(0.01);
                     }
-                
-                    // 2. 彻底重置语音引擎
                     window.speechSynthesis.cancel();
-                    
-                    // 3. 判断设备环境
-                    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
                     const isAndroid = /Android/i.test(navigator.userAgent);
-                
-                    // 如果是安卓，直接走有道云端（安卓原生TTS兼容性太差）
                     if (isAndroid) {
                         playCloudAudio(text);
                     } else {
-                        // iOS 或 PC 尝试原生 Neural 语音
                         const utter = new SpeechSynthesisUtterance(text);
                         const voices = window.speechSynthesis.getVoices();
-                        
-                        // 优先匹配 Nova 喜欢的英式高级女声
                         const premiumVoice = voices.find(v => v.name.includes('Natural') || v.name.includes('Online')) || 
                                            voices.find(v => v.lang.includes('en-GB'));
-                        
                         if(premiumVoice) utter.voice = premiumVoice;
                         utter.lang = 'en-GB';
-                        utter.rate = 0.85; // 稍微调慢一点点，更优雅
-                
+                        utter.rate = 0.85;
                         let hasStarted = false;
-                        
-                        // 4. 关键：500ms 哨兵逻辑
-                        const fallbackTimer = setTimeout(() => {
-                            if (!hasStarted) {
-                                console.log("原生引擎响应超时，切换有道云端...");
-                                playCloudAudio(text);
-                            }
-                        }, 500);
-                
-                        utter.onstart = () => {
-                            hasStarted = true;
-                            clearTimeout(fallbackTimer);
-                        };
-                
-                        // 针对 iOS 的特殊处理：必须在用户交互的回调中执行
+                        const fallbackTimer = setTimeout(() => { if (!hasStarted) playCloudAudio(text); }, 500);
+                        utter.onstart = () => { hasStarted = true; clearTimeout(fallbackTimer); };
                         window.speechSynthesis.speak(utter);
-                        
-                        // 解决部分浏览器 speak 挂起的问题
-                        if (window.speechSynthesis.paused) {
-                            window.speechSynthesis.resume();
-                        }
+                        if (window.speechSynthesis.paused) window.speechSynthesis.resume();
                     }
                 };
 
                 const loadData = async () => {
                     try {
-                        console.log("正在尝试读取 data.json...");
                         const response = await fetch('data.json');
-                        if (!response.ok) throw new Error('网络响应异常');
-                        
                         const data = await response.json();
-                        
-                        // 核心：确保这里拿到了 lessons 数组
-                        if (data && data.lessons) {
-                            allLessons.value = data.lessons;
-                            console.log("数据加载成功，Nova. 课程数:", allLessons.value.length);
-                        } else {
-                            console.error("数据格式不对，没找到 lessons 字段");
-                        }
-                    } catch (error) {
-                        console.error("数据加载失败:", error);
-                    }
+                        if (data && data.lessons) allLessons.value = data.lessons;
+                    } catch (e) { console.error("Load Failed:", e); }
                 };
 
                 onMounted(loadData);
 
                 const flattenWords = (lesson) => {
-                    // 修复点 4: 增加防御性判断
                     if (!lesson || !lesson.groups) return [];
                     return lesson.groups.flatMap(g => 
                         g.items.map(i => ({
-                            ...i, 
-                            type: g.type || 'root', 
-                            affix: g.affix || '', 
-                            logic: g.logic || '' 
+                            ...i, type: g.type || 'root', affix: g.affix || '', logic: g.logic || '' 
                         }))
                     );
                 };
 
                 const flatWords = computed(() => flattenWords(currentLesson.value));
-                const currentWord = computed(() => (flatWords.value && flatWords.value[studyIdx.value]) ? flatWords.value[studyIdx.value] : {});
-                
-                // 颜色判定逻辑：startTotalQuiz 题目数通常远超单课（一般单课 < 15个，综合 > 20个）
+                const currentWord = computed(() => (flatWords.value[studyIdx.value]) || {});
                 const currentLessonId = computed(() => {
                     if (view.value === 'quiz' && quizWords.value.length > 20) return '5'; 
                     return currentLesson.value?.id || '1';
                 });
 
                 const goHome = () => { view.value = 'home'; };
-
                 const startStudy = (lesson) => {
                     currentLesson.value = lesson;
                     studyIdx.value = 0;
                     view.value = 'study';
-                    // 延迟 100ms 播放，确保 currentWord 已更新
-                    setTimeout(() => {
-                        if(currentWord.value?.word) playTTS(currentWord.value.word);
-                    }, 100);
+                    setTimeout(() => { if(currentWord.value?.word) playTTS(currentWord.value.word); }, 200);
                 };
 
                 const nextStudyStep = () => {
-                    if (flatWords.value && studyIdx.value < flatWords.value.length - 1) {
+                    if (studyIdx.value < flatWords.value.length - 1) {
                         studyIdx.value++;
                         playTTS(currentWord.value.word);
-                    } else {
-                        view.value = 'home';
-                    }
+                    } else { view.value = 'home'; }
+                };
+
+                const initQuizSession = () => {
+                    quizIdx.value = 0; quizScore.value = 0; quizInput.value = ''; view.value = 'quiz';
+                    if (quizWords.value.length > 0) setTimeout(() => playTTS(quizWords.value[0].word), 300);
                 };
 
                 const startLessonQuiz = (lesson) => {
-                    // 1. 关键：将当前课程存入变量，以便 HTML 模板中的 :class="'theme-' + currentLessonId" 生效
-                    currentLesson.value = lesson; 
-                    
-                    // 2. 提取该课单词并随机乱序
+                    currentLesson.value = lesson;
                     quizWords.value = flattenWords(lesson).sort(() => Math.random() - 0.5);
-                    
-                    // 3. 进入测试流程
                     initQuizSession();
                 };
 
@@ -335,52 +263,24 @@
                     initQuizSession();
                 };
 
-                const initQuizSession = () => {
-                    quizIdx.value = 0;
-                    quizScore.value = 0;
-                    quizInput.value = '';
-                    view.value = 'quiz';
-                    // 确保进入时有声音
-                    if (quizWords.value.length > 0) {
-                        setTimeout(() => playTTS(quizWords.value[0].word), 200);
-                    }
-                };
-                
                 const handleQuizSubmit = () => {
-                    // 1. 获取当前单词，增加防御性判断
                     const current = quizWords.value[quizIdx.value];
-                    if (!current || !current.word) return;
-                
-                    // 2. 彻底清洗输入数据：转小写并去除两端空格
+                    if (!current) return;
                     const userInput = quizInput.value.toLowerCase().trim();
                     const targetWord = current.word.toLowerCase().trim();
-                
+
                     if (userInput === targetWord) {
-                        // --- 答对逻辑 ---
                         quizScore.value++;
                         isError.value = false;
-                        
                         if (quizIdx.value < quizWords.value.length - 1) {
                             quizIdx.value++;
                             quizInput.value = '';
-                            // 答对后延迟播放下一题，防止声音重叠
-                            setTimeout(() => {
-                                if(quizWords.value[quizIdx.value]) {
-                                    playTTS(quizWords.value[quizIdx.value].word);
-                                }
-                            }, 300);
-                        } else {
-                            // 全部完成
-                            view.value = 'result';
-                        }
+                            setTimeout(() => playTTS(quizWords.value[quizIdx.value].word), 300);
+                        } else { view.value = 'result'; }
                     } else {
-                        // --- 答错逻辑 ---
                         isError.value = true;
-                        // 抖动效果：强制触发浏览器重绘
-                        setTimeout(() => { isError.value = false; }, 600); 
-                        // 答错后清空或全选输入框，让 Nova 重新输入
-                        quizInput.value = ''; 
-                        console.log("回答错误，正确答案是:", targetWord);
+                        setTimeout(() => { isError.value = false; }, 600);
+                        quizInput.value = '';
                     }
                 };
 
