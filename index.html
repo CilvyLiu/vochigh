@@ -117,9 +117,10 @@
                     <div class="text-[10px] font-bold opacity-30 uppercase tracking-widest">Quiz Progress</div>
                 </div>
 
-                <div v-if="quizList && quizList[quizIdx]" class="glass-card p-8 text-center transition-all duration-300 mb-8" 
-                     :class="{'animate-pulse border-red-500': isError}"
-                     :style="!isError ? { borderColor: quizInput ? getThemeColor(quizList[quizIdx].type) : 'transparent', borderWidth: '2px' } : {}">
+                <div v-if="quizList && quizList[quizIdx]" 
+                     class="glass-card p-8 text-center transition-all duration-300 mb-8 border-2" 
+                     :class="isError ? 'animate-pulse border-red-500 bg-red-50' : ''"
+                     :style="!isError ? { borderColor: quizInput ? getThemeColor(quizList[quizIdx].type) : 'rgba(0,0,0,0.05)' } : { border: '2px solid #ef4444' }">
                     
                     <button @click="playTTS(quizList[quizIdx].word)" class="w-16 h-16 rounded-full bg-black/5 mb-6 text-xl btn-active">🔊</button>
                     
@@ -127,6 +128,14 @@
                          :class="'bg-' + quizList[quizIdx].type">
                         {{ quizList[quizIdx].type }}
                     </div>
+                
+                    <p class="text-xs font-bold opacity-40 mb-2 uppercase tracking-tighter">{{ quizList[quizIdx].logic }}</p>
+                    <h3 class="text-2xl font-bold mb-8">{{ quizList[quizIdx].meaning }}</h3>
+                    
+                    <input type="text" v-model="quizInput" @keyup.enter="handleQuizSubmit"
+                           class="w-full p-4 rounded-xl bg-black/5 border-2 outline-none text-center text-xl font-black uppercase tracking-widest transition-all focus:bg-white"
+                           placeholder="TYPE WORD..." autofocus spellcheck="false">
+                </div>
                     
                     <p class="text-xs font-bold opacity-40 mb-2 uppercase tracking-tighter">{{ quizList[quizIdx].logic }}</p>
                     <h3 class="text-2xl font-bold mb-8">{{ quizList[quizIdx].meaning }}</h3>
@@ -331,31 +340,47 @@
                     quizScore.value = 0;
                     quizInput.value = '';
                     view.value = 'quiz';
-                    
-                    // --- 修复点：进入测试立刻播放第一题 ---
+                    // 确保进入时有声音
                     if (quizWords.value.length > 0) {
-                        // 使用一小段延迟确保 view 切换完成
-                        setTimeout(() => {
-                            playTTS(quizWords.value[0].word);
-                        }, 100);
+                        setTimeout(() => playTTS(quizWords.value[0].word), 200);
                     }
                 };
+                
                 const handleQuizSubmit = () => {
+                    // 1. 获取当前单词，增加防御性判断
                     const current = quizWords.value[quizIdx.value];
-                    if (!current) return;
-
-                    if (quizInput.value.toLowerCase().trim() === current.word.toLowerCase().trim()) {
+                    if (!current || !current.word) return;
+                
+                    // 2. 彻底清洗输入数据：转小写并去除两端空格
+                    const userInput = quizInput.value.toLowerCase().trim();
+                    const targetWord = current.word.toLowerCase().trim();
+                
+                    if (userInput === targetWord) {
+                        // --- 答对逻辑 ---
                         quizScore.value++;
                         isError.value = false;
+                        
                         if (quizIdx.value < quizWords.value.length - 1) {
                             quizIdx.value++;
                             quizInput.value = '';
+                            // 答对后延迟播放下一题，防止声音重叠
+                            setTimeout(() => {
+                                if(quizWords.value[quizIdx.value]) {
+                                    playTTS(quizWords.value[quizIdx.value].word);
+                                }
+                            }, 300);
                         } else {
+                            // 全部完成
                             view.value = 'result';
                         }
                     } else {
+                        // --- 答错逻辑 ---
                         isError.value = true;
-                        setTimeout(() => isError.value = false, 500);
+                        // 抖动效果：强制触发浏览器重绘
+                        setTimeout(() => { isError.value = false; }, 600); 
+                        // 答错后清空或全选输入框，让 Nova 重新输入
+                        quizInput.value = ''; 
+                        console.log("回答错误，正确答案是:", targetWord);
                     }
                 };
 
